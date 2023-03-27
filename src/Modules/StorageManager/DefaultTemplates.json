@@ -1,0 +1,58 @@
+{
+    "CSharpClass": {
+        "displayName": "C# Class",
+        "description": "A .Net 6+ Class",
+        "filename": "Class",
+        "fileExt": ".cs",
+        "body": [
+            "namespace [namespace];",
+            "",
+            "public class $TM_FILENAME_BASE",
+            "{",
+            "\t$0",
+            "}"
+        ]
+    },
+    "CSharpEnum": {
+        "displayName": "C# Enum",
+        "filename": "Enum",
+        "description": "A .Net 6+ Enum",
+        "fileExt": ".cs",
+        "body": [
+            "namespace [namespace];",
+            "",
+            "public enum $TM_FILENAME_BASE",
+            "{",
+            "\t$0",
+            "}"
+        ]
+    },
+    "CSharpStruct": {
+        "displayName": "C# Struct",
+        "description": "A .Net 6+ Struct",
+        "filename": "Struct",
+        "fileExt": ".cs",
+        "body": [
+            "namespace [namespace];",
+            "",
+            "public struct $TM_FILENAME_BASE",
+            "{",
+            "\t$0",
+            "}"
+        ]
+    },
+    "CSharpInterface": {
+        "displayName": "C# Interface",
+        "description": "A .Net 6+ Interface",
+        "filename": "IInterface",
+        "fileExt": ".cs",
+        "body": [
+            "namespace [namespace];",
+            "",
+            "public class $TM_FILENAME_BASE",
+            "{",
+            "\t$0",
+            "}"
+        ]
+    }
+}
