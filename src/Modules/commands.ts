@@ -1,23 +1,57 @@
 import { ExtensionContext, commands, Uri, window } from 'vscode';
+import { extLogger, storageMng } from '../extension';
+import { ItemCreator, ItemType } from './ItemCreator/ItemCreator';
+import * as errorMessages from './Logger/ErrorMessages';
 
-export function registerCommands(ctx: ExtensionContext, extensionName: string) {
-    // Commands name for item creator methods
-    const addItemCommandName = `${extensionName}.AddItem`;
-    const addItemCustomCommandName = `${extensionName}.AddItemCustom`;
-
+export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     // Generic Items
-    let addItemCommand = commands.registerCommand(
-        addItemCommandName,
-        (clicker: Uri) => {}
+    let addItemCmd = commands.registerCommand(
+        `${extensionName}.addItem`,
+        (clicker: Uri) => {
+            extLogger.logInfo(`Command: addItem was Invoked`);
+            ItemCreator.createItem(clicker, ItemType.default);
+        }
     );
     // Generic item custom
-    let addItemCustomCommand = commands.registerCommand(
-        addItemCustomCommandName,
-        (clicker: Uri) => {}
+    let addItemCustomCmd = commands.registerCommand(
+        `${extensionName}.addItemCustom`,
+        (clicker: Uri) => {
+            extLogger.logInfo(`Command: addItemCustom was Invoked`);
+            ItemCreator.createItem(clicker, ItemType.custom);
+        }
     );
 
-    // Commands names for storage management
-    
+    // Commands for storage management
+    let restoreTemplatesCmd = commands.registerCommand(
+        `${extensionName}.restoreTemplateFiles`,
+        () => {
+            extLogger.logInfo(`Command: restoreTemplates was Invoked`);
+            storageMng.restoreDefaultUserTemplates(true);
+        }
+    );
+    let openUserTemplates = commands.registerCommand(
+        `${extensionName}.openUserTemplates`,
+        () => {
+            storageMng.openUserTemplates();
+        }
+    );
+
     // Register the commands
-    ctx.subscriptions.push(addItemCommand, addItemCustomCommand);
+    ctx.subscriptions.push(
+        addItemCmd,
+        addItemCustomCmd,
+        restoreTemplatesCmd,
+        openUserTemplates
+    );
 }
+
+// "keybindings": [
+//     {
+//         "command": "add-items.AddItem",
+//         "key": "shift + /"
+//     },
+//     {
+//         "command": "add-items.AddItemCustom",
+//         "key": "shift + \\"
+//     }
+// ]

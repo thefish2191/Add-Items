@@ -1,23 +1,94 @@
 {
     "name": "add-items",
     "displayName": "Add-Items",
+    "publisher": "TheFish2191",
     "description": "A vs code extension to create files from templates, for any programming language, such as C, C++ C#, TS and Python",
+    "repository": "https://github.com/thefish2191/add-items",
     "version": "0.0.1",
+    "license": "MIT",
+    "preview": true,
     "engines": {
         "vscode": "^1.76.0"
     },
     "categories": [
-        "Other"
+        "Programming Languages"
+    ],
+    "keywords": [
+        "New Item",
+        "New File",
+        "New Class",
+        "Custom Items",
+        "Custom Files",
+        "C#",
+        "C# extensions"
     ],
     "activationEvents": [
         "onStartupFinished"
     ],
     "main": "./out/extension.js",
     "contributes": {
+        "snippets": [
+            {
+                "language": "json",
+                "path": "/snippets/Json.json"
+            },
+            {
+                "language": "jsonc",
+                "path": "/snippets/Json.json"
+            }
+        ],
         "commands": [
             {
-                "command": "add-items.helloWorld",
-                "title": "Hello World"
+                "command": "add-items.addItem",
+                "title": "Add Item",
+                "category": "add-items"
+            },
+            {
+                "command": "add-items.addItemCustom",
+                "title": "Add Item (Custom)",
+                "category": "add-items"
+            },
+            {
+                "command": "add-items.restoreTemplateFiles",
+                "title": "Restore user templates file",
+                "category": "add-items"
+            },
+            {
+                "command": "add-items.openUserTemplates",
+                "title": "Open user templates file",
+                "category": "add-items"
+            }
+        ],
+        "menus": {
+            "file/newFile": [
+                {
+                    "command": "add-items.addItem"
+                },
+                {
+                    "command": "add-items.addItemCustom"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "command": "add-items.addItem",
+                    "group": "0_addItems",
+                    "when": "explorerResourceIsFolder"
+                },
+                {
+                    "command": "add-items.addItemCustom",
+                    "group": "0_addItems",
+                    "when": "explorerResourceIsFolder"
+                }
+            ]
+        },
+        "keybindings": [
+            {
+                "command": "add-items.addItem",
+                "key": "shift+/"
+            },
+            {
+                "command": "add-items.addItemCustom",
+                "key": "shift+\\"
             }
         ]
     },
@@ -30,16 +101,19 @@
         "test": "node ./out/test/runTest.js"
     },
     "devDependencies": {
-        "@types/vscode": "^1.76.0",
         "@types/glob": "^8.1.0",
         "@types/mocha": "^10.0.1",
         "@types/node": "16.x",
+        "@types/vscode": "^1.76.0",
         "@typescript-eslint/eslint-plugin": "^5.56.0",
         "@typescript-eslint/parser": "^5.56.0",
+        "@vscode/test-electron": "^2.3.0",
         "eslint": "^8.36.0",
         "glob": "^8.1.0",
         "mocha": "^10.2.0",
-        "typescript": "^4.9.5",
-        "@vscode/test-electron": "^2.3.0"
+        "typescript": "^4.9.5"
+    },
+    "dependencies": {
+        "comment-json": "^4.2.3"
     }
 }

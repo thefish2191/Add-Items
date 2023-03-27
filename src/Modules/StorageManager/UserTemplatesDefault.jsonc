@@ -1,0 +1,62 @@
+{
+    // Place your file templates here.
+    // Each Template is defined with the following properties
+    //
+    // displayName: It will be shown in the drop down menu, as the template name
+    // description: It is shown below the name, can be left empty
+    // filename:    The name it will be given to the system to create a new file
+    // fileExt:     The file extension for the new file
+    // body         A vs code regular snippet
+    //
+    // If you haven't created any snippet, please read the vscode documentation here:
+    // https://code.visualstudio.com/docs/editor/userdefinedsnippets
+    //
+    //
+    // Example 1:
+    "Example1": {
+        "displayName": "Python Script",
+        "description": "A python Hello world script",
+        "filename": "script",
+        "fileExt": ".py",
+        "body": ["Print(\"Hello world\")"]
+    },
+    //
+    // If you are creating a C# or F# template, use `[namespace]` to allow the extension create a namespace
+    "Example2": {
+        "displayName": "C# Legacy Class",
+        "description": "A C# class the old way",
+        "filename": "class",
+        "fileExt": ".cs",
+        "body": [
+            "using System",
+            "using System;",
+            "using System.Collections.Generic;",
+            "using System.Linq;",
+            "using System.Threading.Tasks;",
+            "",
+            "namespace [namespace]",
+            "{",
+            "   public class $TM_FILENAME_BASE",
+            "   {",
+            "       $0",
+            "   }",
+            "}"
+        ]
+    },
+    "Example3": {
+        "displayName": "Cpp Main Program",
+        "description": "Start program for any Cpp application",
+        "filename": "Main",
+        "fileExt": "cpp",
+        "body": [
+            "#include <iostream>",
+            "using namespace std;",
+            "",
+            "int main() {",
+            "\t${1:cout << \"Hello World!\";}",
+            "\treturn 0;",
+            "}"
+        ]
+    }
+    // Start typing "customItem"
+}

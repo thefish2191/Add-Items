@@ -1,0 +1,19 @@
+{
+    "customItem": {
+        "prefix": "customItem",
+        "body": [
+            "\"${1:myItem}\": {",
+            "\t\"displayName\": \"\",",
+            "\t\"description\": \"\",",
+            "\t\"filename\": \"\",",
+            "\t\"fileExt\": \"\",",
+            "\t\"body\": [",
+            "\t\t\"Line1\",",
+            "\t\t\"Line2\"",
+            "\t\t\"Line3\"",
+            "\t\t\"Line4\"",
+            "\t]",
+            "}"
+        ]
+    }
+}
