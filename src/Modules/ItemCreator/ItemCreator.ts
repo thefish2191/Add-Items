@@ -1,13 +1,15 @@
-import { SnippetString, Uri, window } from 'vscode';
+import { commands, SnippetString, Uri, window, workspace } from 'vscode';
 import DefaultTemplates from './DefaultTemplates.json';
 import { storageMng, extLogger } from '../../extension';
 import * as commentJson from 'comment-json';
 import * as errorMessages from './../Logger/ErrorMessages';
 import { AskToUser } from '../AskToUser';
-import { Fabricator } from './Fabricator';
+import { FileSpotter } from './FileSpotter';
+import { ProjectGatherer } from './LanguageActions/cs/NamespaceGatherer';
+import { TemplateParser } from './TemplateParser';
 
 export class ItemCreator {
-    static async createItem(clicker: Uri, itemType: ItemType) {
+    static async createItem(clicker: Uri, itemType: ItemType, preReq = '') {
         try {
             extLogger.logInfo(`Creating a new ${itemType} item.`);
             let templates: any;
@@ -85,15 +87,85 @@ export class ItemCreator {
             });
             extLogger.logInfo(`Template string created!`);
 
-            extLogger.logInfo(`Template resolution complete`);
-            Fabricator.createItem(
-                clicker,
-                selection.filename,
-                selection.fileExt,
-                snippetAsString
+            let selectedRootFolder = await FileSpotter.determinateRootFolder(
+                clicker
             );
+            if (selectedRootFolder === undefined) {
+                throw new Error(`Invalid root folder`);
+            }
+            extLogger.logInfo(`Root folder is: ${selectedRootFolder}`);
+
+            let localPath = '';
+            if (clicker !== undefined) {
+                localPath = FileSpotter.determinateLocalPath(
+                    selectedRootFolder,
+                    clicker
+                );
+            }
+            extLogger.logInfo(`Local path is: ${localPath}`);
+
+            extLogger.logInfo(`Waiting for the user to decide a item name`);
+
+            let tempFilename: string;
+            tempFilename = await AskToUser.forAnItemName(
+                localPath,
+                selection.filename,
+                selection.fileExt
+            );
+            let fileAsUri = Uri.file(
+                selectedRootFolder + tempFilename + selection.fileExt
+            );
+            extLogger.logInfo(`The new file is: ${fileAsUri.fsPath}`);
+
+            let actualSnippet: SnippetString;
+            if (
+                selection.fileExt.toLocaleLowerCase() === '.cs' ||
+                selection.fileExt.toLowerCase() === '.fs'
+            ) {
+                let nameSP: string = '';
+                extLogger.logActivity(`Resolving DotNet namespace...`);
+                nameSP = await ProjectGatherer.generateNamespace(
+                    fileAsUri!.fsPath,
+                    selectedRootFolder
+                );
+                actualSnippet = TemplateParser.newSnippet(
+                    snippetAsString,
+                    nameSP
+                );
+            } else {
+                actualSnippet = TemplateParser.newSnippet(snippetAsString);
+                extLogger.logInfo(`There is no need for a namespace`);
+            }
+
+            let fileExist = await FileSpotter.checkIfFileExist(fileAsUri);
+            let counter = 1;
+            while (fileExist) {
+                extLogger.logInfo(
+                    `The file ${fileAsUri.fsPath} already exist!`
+                );
+                fileAsUri = Uri.file(
+                    selectedRootFolder +
+                        tempFilename +
+                        counter +
+                        selection.fileExt
+                );
+                fileExist = await FileSpotter.checkIfFileExist(fileAsUri);
+                extLogger.logInfo(`Trying with ${fileAsUri.fsPath}`);
+                counter++;
+            }
+
+            if (!fileExist) {
+                extLogger.logActivity(`Creating the file now...`);
+                await workspace.fs.writeFile(fileAsUri, new Uint8Array());
+                commands.executeCommand('vscode.open', fileAsUri).then(() => {
+                    extLogger.logActivity(`Inserting the snippet`);
+                    window.activeTextEditor?.insertSnippet(actualSnippet);
+                });
+            } else {
+                throw new Error(errorMessages.fileExistMessage);
+            }
+
             extLogger.logSuccess(`Create ${itemType} item process finished`);
-            
         } catch (error) {
             // We solve most of the problems here:
             if (error instanceof Error) {

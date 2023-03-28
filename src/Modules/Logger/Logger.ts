@@ -25,10 +25,10 @@ export class Logger {
     }
     public logError(message: string) {
         this.loggingChannel.appendLine(prefixError + message);
-        this.loggingChannel.appendLine(``);
+        this.loggingChannel.appendLine(`  ❌❌ `);
     }
     public logSuccess(message: string) {
-        this.loggingChannel.appendLine(`😎😎 ` + message);
+        this.loggingChannel.appendLine(`   ✅✅ ` + message);
         this.loggingChannel.appendLine(``);
     }
     public reportWarning(message: string) {
