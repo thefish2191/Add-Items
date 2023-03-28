@@ -1,46 +1,38 @@
 import { commands, SnippetString, Uri, window, workspace } from 'vscode';
-import DefaultTemplates from './DefaultTemplates.json';
 import { storageMng, extLogger } from '../../extension';
-import * as commentJson from 'comment-json';
 import * as errorMessages from './../Logger/ErrorMessages';
 import { AskToUser } from '../AskToUser';
 import { FileSpotter } from './FileSpotter';
 import { ProjectGatherer } from './LanguageActions/cs/NamespaceGatherer';
 import { TemplateParser } from './TemplateParser';
+import { ItemType } from './ItemType';
+import { getTemplates, mapTemplates } from './TemplateReader';
+import * as vscode from 'vscode';
 
 export class ItemCreator {
     static async createItem(clicker: Uri, itemType: ItemType, preReq = '') {
         try {
-            extLogger.logInfo(`Creating a new ${itemType} item.`);
-            let templates: any;
-            if (itemType === ItemType.custom) {
-                if (await storageMng.fileExist(storageMng.userTemplates)) {
-                    let tempTemplates = storageMng.readUserTemplates();
-                    try {
-                        templates = commentJson.parse(await tempTemplates);
-                    } catch (error) {
-                        extLogger.logError(
-                            `Error at reading the templates file`
-                        );
-                        throw new Error(errorMessages.templateFileParsingError);
-                    }
-                } else {
-                    throw new Error(errorMessages.templatesFileMissing);
-                }
-            } else {
-                templates = DefaultTemplates;
+            // Prepare the file according to vs work workspace
+            let selectedRootFolder = await FileSpotter.determinateRootFolder(
+                clicker
+            );
+            if (selectedRootFolder === undefined) {
+                vscode.window.showErrorMessage(`Please select a valid folder`);
+                throw new Error(`Invalid root folder`);
             }
+            extLogger.logInfo(`Root folder is: ${selectedRootFolder}`);
+            let localPath = '';
+            if (clicker !== undefined) {
+                localPath = FileSpotter.determinateLocalPath(
+                    selectedRootFolder,
+                    clicker
+                );
+            }
+            extLogger.logInfo(`Local path is: ${localPath}`);
 
-            let templatesMap = [];
-            for (let template in templates) {
-                templatesMap.push({
-                    label: templates[template]['displayName'],
-                    detail: templates[template]['description'],
-                    filename: templates[template]['filename'],
-                    fileExt: templates[template]['fileExt'],
-                    body: templates[template]['body'],
-                });
-            }
+            // Getting the templates
+            let templates: any = await getTemplates(itemType);
+            let templatesMap: any[] = await mapTemplates(templates);
 
             // Verifying we have at least one template
             if (templatesMap.length < 1) {
@@ -50,26 +42,23 @@ export class ItemCreator {
                 extLogger.logInfo(`We found ${templatesMap.length} templates`);
             }
 
-            // The title of the window depends on the item type
-            let winTitle: string =
-                itemType === ItemType.default ? 'item' : `custom item`;
-
             extLogger.logActivity(
                 `Waiting for the user to select a template...`
             );
             // let user select the template they want
-            let selection = await window.showQuickPick(templatesMap, {
-                canPickMany: false,
-                ignoreFocusOut: true,
-                placeHolder: `Select a template to create a new ${winTitle}.`,
-                title: `Creating a new ${winTitle}.`,
-                matchOnDescription: true,
-                matchOnDetail: true,
-            });
-            if (selection === undefined) {
-                throw new Error(errorMessages.userAborted);
+            let selection: any;
+            if (preReq === '') {
+                selection = await AskToUser.selectATemplate(
+                    templatesMap,
+                    itemType
+                );
+                console.log(selection);
+            } else {
+                extLogger.logInfo(`Pre-defined template requested: ${preReq}`);
+                selection[preReq];
             }
             extLogger.logInfo(`User selected: ${selection.label}`);
+
             extLogger.logActivity(`Verifying the snippet before continue`);
             if (
                 selection.label === undefined ||
@@ -81,46 +70,48 @@ export class ItemCreator {
             }
             extLogger.logInfo(`Template looks good!`);
 
+            let fileExt: string = selection.fileExt;
+            if (!String(fileExt).toLocaleLowerCase().startsWith('.')) {
+                fileExt = '.' + fileExt;
+            }
+
+            extLogger.logInfo(`Waiting for the user to decide a item name`);
+            let tempFilename: string;
+            tempFilename = await AskToUser.forAnItemName(
+                localPath,
+                selection.filename,
+                fileExt
+            );
+
+            // Creating a file Uri
+            let fileAsUri = Uri.file(
+                selectedRootFolder + tempFilename + fileExt
+            );
+            let fileExist = await FileSpotter.checkIfFileExist(fileAsUri);
+            let counter = 1;
+            extLogger.logInfo(`The new file is: ${fileAsUri.fsPath}`);
+            while (fileExist) {
+                extLogger.logInfo(
+                    `The file ${fileAsUri.fsPath} already exist!`
+                );
+                fileAsUri = Uri.file(
+                    selectedRootFolder + tempFilename + counter + fileExt
+                );
+                fileExist = await FileSpotter.checkIfFileExist(fileAsUri);
+                extLogger.logInfo(`Trying with ${fileAsUri.fsPath}`);
+                counter++;
+            }
+
+            // Crating the snippet
+            let actualSnippet: SnippetString;
             let snippetAsString = '';
             selection?.body.forEach((element: string) => {
                 snippetAsString += element + '\r';
             });
             extLogger.logInfo(`Template string created!`);
-
-            let selectedRootFolder = await FileSpotter.determinateRootFolder(
-                clicker
-            );
-            if (selectedRootFolder === undefined) {
-                throw new Error(`Invalid root folder`);
-            }
-            extLogger.logInfo(`Root folder is: ${selectedRootFolder}`);
-
-            let localPath = '';
-            if (clicker !== undefined) {
-                localPath = FileSpotter.determinateLocalPath(
-                    selectedRootFolder,
-                    clicker
-                );
-            }
-            extLogger.logInfo(`Local path is: ${localPath}`);
-
-            extLogger.logInfo(`Waiting for the user to decide a item name`);
-
-            let tempFilename: string;
-            tempFilename = await AskToUser.forAnItemName(
-                localPath,
-                selection.filename,
-                selection.fileExt
-            );
-            let fileAsUri = Uri.file(
-                selectedRootFolder + tempFilename + selection.fileExt
-            );
-            extLogger.logInfo(`The new file is: ${fileAsUri.fsPath}`);
-
-            let actualSnippet: SnippetString;
             if (
-                selection.fileExt.toLocaleLowerCase() === '.cs' ||
-                selection.fileExt.toLowerCase() === '.fs'
+                fileExt.toLocaleLowerCase() === '.cs' ||
+                fileExt.toLowerCase() === '.fs'
             ) {
                 let nameSP: string = '';
                 extLogger.logActivity(`Resolving DotNet namespace...`);
@@ -137,23 +128,7 @@ export class ItemCreator {
                 extLogger.logInfo(`There is no need for a namespace`);
             }
 
-            let fileExist = await FileSpotter.checkIfFileExist(fileAsUri);
-            let counter = 1;
-            while (fileExist) {
-                extLogger.logInfo(
-                    `The file ${fileAsUri.fsPath} already exist!`
-                );
-                fileAsUri = Uri.file(
-                    selectedRootFolder +
-                        tempFilename +
-                        counter +
-                        selection.fileExt
-                );
-                fileExist = await FileSpotter.checkIfFileExist(fileAsUri);
-                extLogger.logInfo(`Trying with ${fileAsUri.fsPath}`);
-                counter++;
-            }
-
+            // Creating the file and adding the snippet
             if (!fileExist) {
                 extLogger.logActivity(`Creating the file now...`);
                 await workspace.fs.writeFile(fileAsUri, new Uint8Array());
@@ -164,7 +139,6 @@ export class ItemCreator {
             } else {
                 throw new Error(errorMessages.fileExistMessage);
             }
-
             extLogger.logSuccess(`Create ${itemType} item process finished`);
         } catch (error) {
             // We solve most of the problems here:
@@ -186,13 +160,13 @@ export class ItemCreator {
                     extLogger.logError(`Process aborted by the user`);
                 } else if (error.message === errorMessages.templateError) {
                     extLogger.logError(`Template has missing properties`);
+                } else {
+                    extLogger.logError(error.name);
+                    extLogger.logError(error.message);
                 }
             }
         }
     }
 }
 
-export enum ItemType {
-    custom = 'custom',
-    default = 'default',
-}
+export { ItemType };

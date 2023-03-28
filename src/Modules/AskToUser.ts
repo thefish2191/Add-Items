@@ -10,6 +10,8 @@ import {
 import path from 'path';
 import { FileSpotter } from './ItemCreator/FileSpotter';
 import { multiSepRegex } from './GlobalConsts';
+import { ItemType } from './ItemCreator/ItemType';
+import * as errorMessages from './Logger/ErrorMessages';
 
 export class AskToUser {
     static createTemplateFile() {
@@ -174,5 +176,22 @@ export class AskToUser {
             }
         }
         return selectedRootFolder;
+    }
+    static async selectATemplate(templatesMap: any[], itemType: ItemType) {
+        // The title of the window depends on the item type
+        let winTitle: string =
+            itemType === ItemType.default ? 'item' : `custom item`;
+        let selection = await window.showQuickPick(templatesMap, {
+            canPickMany: false,
+            ignoreFocusOut: true,
+            placeHolder: `Select a template to create a new ${winTitle}.`,
+            title: `Creating a new ${winTitle}.`,
+            matchOnDescription: true,
+            matchOnDetail: true,
+        });
+        if (selection === undefined) {
+            throw new Error(errorMessages.userAborted);
+        }
+        return selection;
     }
 }
