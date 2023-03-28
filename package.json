@@ -4,6 +4,7 @@
     "publisher": "TheFish2191",
     "description": "A vs code extension to create files from templates, for any programming language, such as C, C++ C#, TS and Python",
     "repository": "https://github.com/thefish2191/add-items",
+    "icon": "./Resources/Extension/windows.png",
     "version": "0.0.1",
     "license": "MIT",
     "preview": true,

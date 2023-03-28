@@ -40,9 +40,14 @@ export class StorageManager {
             .copy(this.userTemplatesDefaults, this.userTemplates, {
                 overwrite: force,
             })
-            .then(() => {
-                this.openUserTemplates();
-            });
+            .then(
+                () => {
+                    this.openUserTemplates();
+                },
+                (err) => {
+                    extLogger.logError(err);
+                }
+            );
     }
     public async fileExist(file: Uri): Promise<boolean> {
         let exist = true;

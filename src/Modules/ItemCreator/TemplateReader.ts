@@ -24,7 +24,7 @@ export async function getTemplates(itemType: ItemType) {
     }
     return templates;
 }
-export async function mapTemplates(templates: any) {
+export function mapTemplates(templates: any) {
     let templatesMap = [];
     for (let template in templates) {
         templatesMap.push({
@@ -33,6 +33,19 @@ export async function mapTemplates(templates: any) {
             filename: templates[template]['filename'],
             fileExt: templates[template]['fileExt'],
             body: templates[template]['body'],
+        });
+    }
+    return templatesMap;
+}
+export function mapTemplate(templates: any) {
+    let templatesMap = [];
+    for (let template in templates) {
+        templatesMap.push({
+            label: templates['displayName'],
+            detail: templates['description'],
+            filename: templates['filename'],
+            fileExt: templates['fileExt'],
+            body: templates['body'],
         });
     }
     return templatesMap;

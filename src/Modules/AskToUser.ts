@@ -62,6 +62,7 @@ export class AskToUser {
             fileExtension = '.' + fileExtension;
         }
         let itemName: string | undefined;
+
         let fullLength = localPath.length + customName.length;
         itemName = await vscode.window.showInputBox({
             ignoreFocusOut: true,

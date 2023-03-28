@@ -6,12 +6,13 @@ import { FileSpotter } from './FileSpotter';
 import { ProjectGatherer } from './LanguageActions/cs/NamespaceGatherer';
 import { TemplateParser } from './TemplateParser';
 import { ItemType } from './ItemType';
-import { getTemplates, mapTemplates } from './TemplateReader';
+import { getTemplates, mapTemplate, mapTemplates } from './TemplateReader';
 import * as vscode from 'vscode';
 
 export class ItemCreator {
-    static async createItem(clicker: Uri, itemType: ItemType, preReq = '') {
+    static async createItem(clicker: Uri, itemType: ItemType, preReq: string) {
         try {
+
             // Prepare the file according to vs work workspace
             let selectedRootFolder = await FileSpotter.determinateRootFolder(
                 clicker
@@ -32,7 +33,7 @@ export class ItemCreator {
 
             // Getting the templates
             let templates: any = await getTemplates(itemType);
-            let templatesMap: any[] = await mapTemplates(templates);
+            let templatesMap: any[] = mapTemplates(templates);
 
             // Verifying we have at least one template
             if (templatesMap.length < 1) {
@@ -47,16 +48,18 @@ export class ItemCreator {
             );
             // let user select the template they want
             let selection: any;
-            if (preReq === '') {
+            if (preReq === undefined || preReq === '' || []) {
                 selection = await AskToUser.selectATemplate(
                     templatesMap,
                     itemType
                 );
-                console.log(selection);
             } else {
                 extLogger.logInfo(`Pre-defined template requested: ${preReq}`);
-                selection[preReq];
+                selection = templates[preReq];
+                selection = mapTemplate(selection)[1];
             }
+            console.log(selection);
+
             extLogger.logInfo(`User selected: ${selection.label}`);
 
             extLogger.logActivity(`Verifying the snippet before continue`);
@@ -160,6 +163,7 @@ export class ItemCreator {
                     extLogger.logError(`Process aborted by the user`);
                 } else if (error.message === errorMessages.templateError) {
                     extLogger.logError(`Template has missing properties`);
+                    AskToUser.fixErrorsOnTemplateFiles();
                 } else {
                     extLogger.logError(error.name);
                     extLogger.logError(error.message);
