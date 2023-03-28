@@ -30,11 +30,7 @@
         "snippets": [
             {
                 "language": "json",
-                "path": "/snippets/Json.json"
-            },
-            {
-                "language": "jsonc",
-                "path": "/snippets/Json.json"
+                "path": "/snippets/Jsonc.json"
             }
         ],
         "commands": [

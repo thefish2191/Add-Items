@@ -1,7 +1,6 @@
 import { ExtensionContext, commands, Uri, window } from 'vscode';
 import { extLogger, storageMng } from '../extension';
 import { ItemCreator, ItemType } from './ItemCreator/ItemCreator';
-import * as errorMessages from './Logger/ErrorMessages';
 
 export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     // Generic Items
@@ -44,14 +43,3 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
         openUserTemplates
     );
 }
-
-// "keybindings": [
-//     {
-//         "command": "add-items.AddItem",
-//         "key": "shift + /"
-//     },
-//     {
-//         "command": "add-items.AddItemCustom",
-//         "key": "shift + \\"
-//     }
-// ]

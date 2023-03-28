@@ -18,7 +18,7 @@
         "description": "A python Hello world script",
         "filename": "script",
         "fileExt": ".py",
-        "body": ["Print(\"Hello world\")"]
+        "body": ["print(\"Hello world\")"]
     },
     //
     // If you are creating a C# or F# template, use `[namespace]` to allow the extension create a namespace
@@ -28,7 +28,6 @@
         "filename": "class",
         "fileExt": ".cs",
         "body": [
-            "using System",
             "using System;",
             "using System.Collections.Generic;",
             "using System.Linq;",
