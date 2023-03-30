@@ -118,6 +118,7 @@ export class AskToUser {
         }
         let selectedProjects = Uri.file(userSelection?.detail!);
         return selectedProjects;
+        
     }
     /**
      * Shows a quick pick to allow the user to select multiple URI, from a URI array
@@ -194,5 +195,25 @@ export class AskToUser {
             throw new Error(errorMessages.userAborted);
         }
         return selection;
+    }
+    static async areYouSureToReplaceTemplates() {
+        vscode.window
+            .showInformationMessage(
+                `Are you sure you want to replace the file? You will lose all the information within it`,
+                'Replace it!',
+                `Cancel`
+            )
+            .then((answer) => {
+                if (answer === `Replace it!`) {
+                    extLogger.reportWarning(
+                        `The file is now being overwritten`
+                    );
+                    storageMng.restoreDefaultUserTemplates(true);
+                } else if (answer === 'Cancel') {
+                    extLogger.logInfo(
+                        `The user decided not no replace the file!`
+                    );
+                }
+            });
     }
 }

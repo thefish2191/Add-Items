@@ -2,10 +2,10 @@
     "name": "add-items",
     "displayName": "Add-Items",
     "publisher": "TheFish2191",
-    "description": "A vs code extension to create files from templates, for any programming language, such as C, C++ C#, TS and Python",
+    "description": "Create files from templates, for any programming language, such as C, C++ C#, TS and Python",
     "repository": "https://github.com/thefish2191/add-items",
     "icon": "./Resources/Extension/windows.png",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "license": "MIT",
     "preview": true,
     "engines": {
@@ -23,14 +23,12 @@
         "C#",
         "C# extensions"
     ],
-    "activationEvents": [
-        "onStartupFinished"
-    ],
+    "activationEvents": [],
     "main": "./out/extension.js",
     "contributes": {
         "snippets": [
             {
-                "language": "json",
+                "language": "jsonc",
                 "path": "/snippets/Jsonc.json"
             }
         ],
@@ -81,11 +79,11 @@
         "keybindings": [
             {
                 "command": "add-items.addItem",
-                "key": "shift+/"
+                "key": "ctrl+alt+/"
             },
             {
                 "command": "add-items.addItemCustom",
-                "key": "shift+\\"
+                "key": "ctrl+alt+\\"
             }
         ]
     },

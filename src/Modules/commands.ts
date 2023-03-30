@@ -1,7 +1,7 @@
-import { showFolderPicker } from '@igor.dvlpr/vscode-folderpicker';
 import { ExtensionContext, commands, Uri, window } from 'vscode';
 import { extLogger, storageMng } from '../extension';
 import { ItemCreator, ItemType } from './ItemCreator/ItemCreator';
+import { AskToUser } from './AskToUser';
 
 export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     // Generic Items
@@ -24,17 +24,16 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     // Commands for storage management
     let restoreTemplatesCmd = commands.registerCommand(
         `${extensionName}.restoreTemplateFiles`,
-        (clicker: Uri, defReq: string) => {
-            console.log(clicker);
-            console.log(defReq);
-            extLogger.logInfo(`Command: restoreTemplates was Invoked`);
-            storageMng.restoreDefaultUserTemplates(true);
+        (clicker: Uri) => {
+            extLogger.logInfo(`restoreTemplatesFiles command invoked`);
+            extLogger.logActivity(`Asking the user if they are sure...`);
+            AskToUser.areYouSureToReplaceTemplates();
         }
     );
     let openUserTemplates = commands.registerCommand(
         `${extensionName}.openUserTemplates`,
         () => {
-            // storageMng.openUserTemplates();
+            storageMng.openUserTemplates();
         }
     );
 

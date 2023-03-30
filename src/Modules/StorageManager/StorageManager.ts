@@ -1,7 +1,6 @@
 import * as path from 'path';
 import { Uri, ExtensionContext, workspace } from 'vscode';
 import { extLogger } from '../../extension';
-import * as errorMessages from './../Logger/ErrorMessages';
 import * as vscode from 'vscode';
 import { AskToUser } from '../AskToUser';
 
@@ -11,7 +10,6 @@ export class StorageManager {
     private ctx: ExtensionContext;
 
     // Default folder
-
     // User templates
     userTemplates: Uri; // Uri to the user templates files
     private userTemplatesDefaults: Uri; // Default
@@ -24,30 +22,36 @@ export class StorageManager {
         this.userTemplatesDefaults = Uri.file(
             path.join(
                 this.ctx.extensionUri.fsPath,
-                'src',
-                'Modules',
-                'StorageManager',
                 'UserTemplatesDefault.jsonc'
             )
         );
         this.ensureStorage();
     }
-    private ensureStorage() {
-        workspace.fs.createDirectory(this.ctx.globalStorageUri);
+    private async ensureStorage() {
+        try {
+            workspace.fs.createDirectory(this.ctx.globalStorageUri);
+        } catch (error) {
+            if (error instanceof Error) {
+                extLogger.logError(error.name);
+                extLogger.logError(error.message);
+            }
+        }
     }
-    public restoreDefaultUserTemplates(force: boolean = false) {
-        workspace.fs
-            .copy(this.userTemplatesDefaults, this.userTemplates, {
-                overwrite: force,
-            })
-            .then(
-                () => {
+    public async restoreDefaultUserTemplates(force: boolean = false) {
+        try {
+            await workspace.fs
+                .copy(this.userTemplatesDefaults, this.userTemplates, {
+                    overwrite: force,
+                })
+                .then(() => {
                     this.openUserTemplates();
-                },
-                (err) => {
-                    extLogger.logError(err);
-                }
-            );
+                });
+        } catch (error) {
+            if (error instanceof Error) {
+                extLogger.logError(error.name);
+                extLogger.logError(error.message);
+            }
+        }
     }
     public async fileExist(file: Uri): Promise<boolean> {
         let exist = true;
@@ -67,10 +71,13 @@ export class StorageManager {
     }
     public async openUserTemplates() {
         if (await this.fileExist(this.userTemplates)) {
-            vscode.commands.executeCommand('vscode.open', this.userTemplates);
+            await vscode.commands.executeCommand(
+                'vscode.open',
+                this.userTemplates
+            );
         } else {
-            AskToUser.createTemplateFile();
             extLogger.logError(`The file does not exist`);
+            AskToUser.createTemplateFile();
         }
     }
 }
