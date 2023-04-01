@@ -2,10 +2,10 @@
     "name": "add-items",
     "displayName": "Add-Items",
     "publisher": "TheFish2191",
-    "description": "Create files from templates, for any programming language, such as C, C++ C#, TS and Python",
+    "description": "Create files for any programming language, such as C, C++ C#, TS and Python",
     "repository": "https://github.com/thefish2191/add-items",
     "icon": "./Resources/Extension/windows.png",
-    "version": "0.0.3",
+    "version": "0.0.1",
     "license": "MIT",
     "preview": true,
     "engines": {
