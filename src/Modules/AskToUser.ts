@@ -118,7 +118,6 @@ export class AskToUser {
         }
         let selectedProjects = Uri.file(userSelection?.detail!);
         return selectedProjects;
-        
     }
     /**
      * Shows a quick pick to allow the user to select multiple URI, from a URI array

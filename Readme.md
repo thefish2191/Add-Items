@@ -5,11 +5,17 @@ Use the templates given or create your own!
 
 ## How to use
 
-Once the extension is install on `vscode` run the command: `add-items: Add item` or `add-items: Add Item (custom)`
+Once the extension is installed on `vscode`, run the command: `add-items: Add item` or `add-items: Add Item (custom)` using the command palette
 
 ![additem](Resources/Readme/Instructions/AddItemCommand.png)
 
-And select a template:
+or using the context menu
+
+![addItem](Resources/Readme/Instructions/AddItemCtx.png)
+
+A shortcut is already provided for you: `Ctrl + alt + /` for default items, and `Ctrl + alt + \` for custom items.  
+
+Then select a template:
 
 ![selectTemplate](Resources/Readme/Instructions/SelectTemplate.png)
 
@@ -17,9 +23,7 @@ Or select a template of your own:
 
 ![selectCustomTemplate](Resources/Readme/Instructions/SelectCustomTemplate.png)
 
-You can also create this extension from the welcome page, in the `new file...` menu
-
-![vscodeWelcome](Resources/Readme/Instructions/vscodeWelcome.png)
+You can also create an item from the welcome page, in the `new file...` menu
 
 ## Instructions to create a new templates
 
@@ -43,6 +47,8 @@ If you mess up this file too much, run the command: Restore user templates file.
 ```
 
 ## Special Thanks to
+
+### Flaticon.com
 
  For the icon of this extension
 <a href="https://www.flaticon.com/free-icons/computer" title="computer icons">Computer icons created by Smashicons - Flaticon</a>
