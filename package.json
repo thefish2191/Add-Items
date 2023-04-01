@@ -5,7 +5,7 @@
     "description": "Create classes and other types for any Programming Language (C#, Cpp, python etc)",
     "repository": "https://github.com/thefish2191/add-items",
     "icon": "./Resources/Extension/windows.png",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "license": "MIT",
     "preview": true,
     "engines": {
@@ -51,6 +51,11 @@
             {
                 "command": "add-items.openUserTemplates",
                 "title": "Open user templates file",
+                "category": "add-items"
+            },
+            {
+                "command": "add-items.addClass",
+                "title": "RunTestCommand",
                 "category": "add-items"
             }
         ],

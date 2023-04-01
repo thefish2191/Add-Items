@@ -274,7 +274,7 @@
             "}"
         ]
     },
-    "XML": {
+    "XMLFile": {
         "displayName": "XML file",
         "description": "A basic xml file",
         "filename": "myXml",

@@ -7,24 +7,44 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     // Generic Items
     let addItemCmd = commands.registerCommand(
         `${extensionName}.addItem`,
-        (clicker: Uri, defReq: string) => {
-            extLogger.logInfo(`Command: addItem was Invoked`);
-            ItemCreator.createItem(clicker, ItemType.default, defReq);
+        (clicker: Uri, preReq: any[] | string) => {
+            extLogger.logInfo(`AddItem command invoked!`);
+            if (preReq instanceof String || typeof preReq === 'string') {
+                extLogger.logInfo(`Requested: ${preReq}`);
+                ItemCreator.createItem(
+                    clicker,
+                    ItemType.default,
+                    String(preReq)
+                );
+            } else {
+                extLogger.logInfo(`No default requested`);
+                ItemCreator.createItem(clicker, ItemType.default);
+            }
         }
     );
     // Generic item custom
     let addItemCustomCmd = commands.registerCommand(
         `${extensionName}.addItemCustom`,
-        (clicker: Uri, defReq: string) => {
+        (clicker: Uri, preReq: any[] | string) => {
             extLogger.logInfo(`Command: addItemCustom was Invoked`);
-            ItemCreator.createItem(clicker, ItemType.custom, defReq);
+            if (preReq instanceof String || typeof preReq === 'string') {
+                extLogger.logInfo(`Requested: ${preReq}`);
+                ItemCreator.createItem(
+                    clicker,
+                    ItemType.custom,
+                    String(preReq)
+                );
+            } else {
+                extLogger.logInfo(`No default requested`);
+                ItemCreator.createItem(clicker, ItemType.custom);
+            }
         }
     );
 
     // Commands for storage management
     let restoreTemplatesCmd = commands.registerCommand(
         `${extensionName}.restoreTemplateFiles`,
-        (clicker: Uri) => {
+        () => {
             extLogger.logInfo(`restoreTemplatesFiles command invoked`);
             extLogger.logActivity(`Asking the user if they are sure...`);
             AskToUser.areYouSureToReplaceTemplates();
@@ -36,12 +56,19 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
             storageMng.openUserTemplates();
         }
     );
+    let addClass = commands.registerCommand(
+        'add-items.addClass',
+        (clicker: Uri) => {
+            commands.executeCommand(`add-items.addItem`, clicker, 'CSharpEnum');
+        }
+    );
 
     // Register the commands
     ctx.subscriptions.push(
         addItemCmd,
         addItemCustomCmd,
         restoreTemplatesCmd,
-        openUserTemplates
+        openUserTemplates,
+        addClass
     );
 }

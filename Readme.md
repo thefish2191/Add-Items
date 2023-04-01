@@ -25,7 +25,7 @@ Or select a template of your own:
 
 You can also create an item from the welcome page, in the `new file...` menu
 
-## Instructions to create a new templates
+## Instructions to create a new template
 
 The instruction are added in the custom templates file itself, but here they are, in case you needed:
 
@@ -50,5 +50,5 @@ If you mess up this file too much, run the command: Restore user templates file.
 
 ### Flaticon.com
 
- For the icon of this extension
+ For the icon of this extension:  
 <a href="https://www.flaticon.com/free-icons/computer" title="computer icons">Computer icons created by Smashicons - Flaticon</a>

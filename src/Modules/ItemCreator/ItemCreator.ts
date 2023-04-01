@@ -10,9 +10,12 @@ import { getTemplates, mapTemplate, mapTemplates } from './TemplateReader';
 import * as vscode from 'vscode';
 
 export class ItemCreator {
-    static async createItem(clicker: Uri, itemType: ItemType, preReq: string) {
+    static async createItem(
+        clicker: Uri,
+        itemType: ItemType,
+        preReq: string | undefined = undefined
+    ) {
         try {
-
             // Prepare the file according to vs work workspace
             let selectedRootFolder = await FileSpotter.determinateRootFolder(
                 clicker
@@ -48,18 +51,17 @@ export class ItemCreator {
             );
             // let user select the template they want
             let selection: any;
-            if (preReq === undefined || preReq === '' || []) {
+
+            if (preReq !== undefined) {
+                extLogger.logInfo(`Pre-defined template requested: ${preReq}`);
+                selection = templates[preReq];
+                selection = mapTemplate(selection)[1];
+            } else {
                 selection = await AskToUser.selectATemplate(
                     templatesMap,
                     itemType
                 );
-            } else {
-                extLogger.logInfo(`Pre-defined template requested: ${preReq}`);
-                selection = templates[preReq];
-                selection = mapTemplate(selection)[1];
             }
-            console.log(selection);
-
             extLogger.logInfo(`User selected: ${selection.label}`);
 
             extLogger.logActivity(`Verifying the snippet before continue`);
