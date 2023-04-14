@@ -1,5 +1,12 @@
 # Add-Items
 
+Written with ❤️ by [theFish2191](https://twitter.com/thefish2191)
+
+[![GitHub](https://img.shields.io/github/license/thefish2191/Add-Items?style=plastic)](https://github.com/thefish2191/Add-Items/blob/Live/LICENSE)
+[![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/TheFish2191.add-items?style=plastic)](https://marketplace.visualstudio.com/items?itemName=TheFish2191.add-items)
+[![GitHub issues](https://img.shields.io/github/issues/thefish2191/Add-Items?style=plastic)](https://github.com/thefish2191/Add-Items/issues)
+[![Visual Studio Marketplace Rating (Stars)](https://img.shields.io/visual-studio-marketplace/stars/TheFish2191.Add-Items)](https://marketplace.visualstudio.com/items?itemName=TheFish2191.Add-Items)
+
 Create files, classes, enums, scripts, json, XML or any other for your favorite programming language!  
 Use the templates given or create your own!
 
