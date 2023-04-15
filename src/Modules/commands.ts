@@ -1,7 +1,8 @@
 import { ExtensionContext, commands, Uri, window } from 'vscode';
 import { extLogger, storageMng } from '../extension';
-import { ItemCreator, ItemType } from './ItemCreator/ItemCreator';
+import { ItemCreator } from './ItemCreator/ItemCreator';
 import { AskToUser } from './AskToUser';
+import { ItemType } from './ItemCreator/ItemType';
 
 export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     // Generic Items
@@ -63,7 +64,7 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
             commands.executeCommand(
                 `add-items.addItem`,
                 clicker,
-                'csharp.class'
+                'others.JSON'
             );
         }
     );

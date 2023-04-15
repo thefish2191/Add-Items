@@ -52,12 +52,17 @@ export class ItemCreator {
             extLogger.logActivity(
                 `Waiting for the user to select a language...`
             );
+            // getting the stuff for pre requested items
+            let preLang: any;
+            let preTemplate: any;
+            if (preReq !== undefined) {
+                preLang = splitLanguage(preReq);
+                preTemplate = splitTemplate(preReq);
+            }
             // let user select the language they want before continue
             let language: any;
             if (preReq !== undefined) {
-                // Nothing to do here...
-                // language = templates[preReq];
-                // language = mapTemplates(language)[1];
+                language = templates[preLang];
             } else {
                 language = await AskToUser.selectALanguage(languagesMap);
                 extLogger.logInfo(`User selected the language: ${language.id}`);
@@ -70,10 +75,7 @@ export class ItemCreator {
             let template: any;
             if (preReq !== undefined) {
                 extLogger.logInfo(`Pre-defined template requested: ${preReq}`);
-                console.log(preReq);
-                template = templates[preReq];
-                console.log(template);
-                template = mapTemplates(template)[1];
+                template = templates[preLang]['templates'][preTemplate];
             } else {
                 templatesMap = mapTemplates(
                     templates[language.id]['templates']
@@ -83,6 +85,7 @@ export class ItemCreator {
                     itemType
                 );
             }
+
             extLogger.logInfo(`User selected: ${template.label}`);
 
             // TODO: Verify the template:
@@ -199,5 +202,19 @@ export class ItemCreator {
     }
 }
 
-function splitLanguage(req: string) {}
-function splitTemplate(req: string) {}
+function splitLanguage(req: string) {
+    const langPattern = /^[\w]*/;
+    let lang = req.match(langPattern)?.toString();
+    if (lang === undefined) {
+        throw new Error('Error at requested language');
+    }
+    return lang;
+}
+function splitTemplate(req: string) {
+    const langPattern = /[\w]*$/;
+    let lang = req.match(langPattern)?.toString();
+    if (lang === undefined) {
+        throw new Error('Error at requested template');
+    }
+    return lang;
+}

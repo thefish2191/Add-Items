@@ -279,7 +279,7 @@
         }
     },
     "others": {
-        "displayName": "Others files",
+        "displayName": "Other files",
         "description": "Language independent files, such as JSON and XML",
         "templates": {
             "XML": {
