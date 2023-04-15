@@ -37,15 +37,14 @@ export function mapTemplates(templates: any) {
     }
     return templatesMap;
 }
-export function mapTemplate(templates: any) {
+export function mapLanguages(templates: any) {
     let templatesMap = [];
     for (let template in templates) {
         templatesMap.push({
-            label: templates['displayName'],
-            detail: templates['description'],
-            filename: templates['filename'],
-            fileExt: templates['fileExt'],
-            body: templates['body'],
+            id: template,
+            label: templates[template]['displayName'],
+            detail: templates[template]['description'],
+            fileExt: templates[template]['fileExt'],
         });
     }
     return templatesMap;

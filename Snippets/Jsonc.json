@@ -1,6 +1,6 @@
 {
-    "customItem": {
-        "prefix": "customItem",
+    "itemTemplate": {
+        "prefix": "itemTemplate",
         "body": [
             "\"${1:myItem}\": {",
             "\t\"displayName\": \"${2:}\",",
@@ -14,6 +14,25 @@
             "\t\t\"Line4\"",
             "\t]",
             "}"
-        ]
+        ],
+        "description": "A new item template to create file"
+    },
+    "languageTemplate": {
+        "prefix": "languageTemplate",
+        "body": [
+            "\"${1:myItem}\": {",
+            "\t\"displayName\": \"${2:}\",",
+            "\t\"description\": \"${3:}\",",
+            "\t\"filename\": \"${4:}\",",
+            "\t\"fileExt\": \"${5:}\",",
+            "\t\"body\": [",
+            "\t\t\"Line1\",",
+            "\t\t\"Line2\",",
+            "\t\t\"Line3\",",
+            "\t\t\"Line4\"",
+            "\t]",
+            "}"
+        ],
+        "description": "A new language entry for the add-items extension"
     }
 }

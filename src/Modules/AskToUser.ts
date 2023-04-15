@@ -195,6 +195,21 @@ export class AskToUser {
         }
         return selection;
     }
+    static async selectALanguage(templatesMap: any[]) {
+        // The title of the window depends on the item type
+        let selection = await window.showQuickPick(templatesMap, {
+            canPickMany: false,
+            ignoreFocusOut: true,
+            placeHolder: `Select a language to continue.`,
+            title: 'Select a language',
+            matchOnDescription: true,
+            matchOnDetail: true,
+        });
+        if (selection === undefined) {
+            throw new Error(errorMessages.userAborted);
+        }
+        return selection;
+    }
     static async areYouSureToReplaceTemplates() {
         vscode.window
             .showInformationMessage(

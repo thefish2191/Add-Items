@@ -9,6 +9,7 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
         `${extensionName}.addItem`,
         (clicker: Uri, preReq: any[] | string) => {
             extLogger.logInfo(`AddItem command invoked!`);
+            // preReq = 'csharp.class';
             if (preReq instanceof String || typeof preReq === 'string') {
                 extLogger.logInfo(`Requested: ${preReq}`);
                 ItemCreator.createItem(
@@ -59,7 +60,11 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     let addClass = commands.registerCommand(
         'add-items.addClass',
         (clicker: Uri) => {
-            commands.executeCommand(`add-items.addItem`, clicker, 'CSharpEnum');
+            commands.executeCommand(
+                `add-items.addItem`,
+                clicker,
+                'csharp.class'
+            );
         }
     );
 

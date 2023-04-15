@@ -6,8 +6,9 @@ import { FileSpotter } from './FileSpotter';
 import { ProjectGatherer } from './LanguageActions/cs/NamespaceGatherer';
 import { TemplateParser } from './TemplateParser';
 import { ItemType } from './ItemType';
-import { getTemplates, mapTemplate, mapTemplates } from './TemplateReader';
+import { getTemplates, mapLanguages, mapTemplates } from './TemplateReader';
 import * as vscode from 'vscode';
+import path from 'path';
 
 export class ItemCreator {
     static async createItem(
@@ -34,48 +35,71 @@ export class ItemCreator {
             }
             extLogger.logInfo(`Local path is: ${localPath}`);
 
-            // Getting the templates
+            // Getting the template file
             let templates: any = await getTemplates(itemType);
-            let templatesMap: any[] = mapTemplates(templates);
 
-            // Verifying we have at least one template
-            if (templatesMap.length < 1) {
-                extLogger.logError(`No item templates found!`);
+            // Mapping the languages in the template files
+            let languagesMap: any[] = mapLanguages(templates);
+
+            // Verifying we have at least one language
+            if (languagesMap.length < 1) {
+                extLogger.logError(`No languages on the template file!`);
                 throw new Error(errorMessages.templateFileEmpty);
             } else {
-                extLogger.logInfo(`We found ${templatesMap.length} templates`);
+                extLogger.logInfo(`We found ${languagesMap.length} languages`);
             }
 
             extLogger.logActivity(
-                `Waiting for the user to select a template...`
+                `Waiting for the user to select a language...`
             );
-            // let user select the template they want
-            let selection: any;
+            // let user select the language they want before continue
+            let language: any;
+            if (preReq !== undefined) {
+                // Nothing to do here...
+                // language = templates[preReq];
+                // language = mapTemplates(language)[1];
+            } else {
+                language = await AskToUser.selectALanguage(languagesMap);
+                extLogger.logInfo(`User selected the language: ${language.id}`);
+            }
 
+            // Mapping the templates
+            let templatesMap: any[];
+
+            // Let the user select a template, based on the language
+            let template: any;
             if (preReq !== undefined) {
                 extLogger.logInfo(`Pre-defined template requested: ${preReq}`);
-                selection = templates[preReq];
-                selection = mapTemplate(selection)[1];
+                console.log(preReq);
+                template = templates[preReq];
+                console.log(template);
+                template = mapTemplates(template)[1];
             } else {
-                selection = await AskToUser.selectATemplate(
+                templatesMap = mapTemplates(
+                    templates[language.id]['templates']
+                );
+                template = await AskToUser.selectATemplate(
                     templatesMap,
                     itemType
                 );
             }
-            extLogger.logInfo(`User selected: ${selection.label}`);
+            extLogger.logInfo(`User selected: ${template.label}`);
 
+            // TODO: Verify the template:
             extLogger.logActivity(`Verifying the snippet before continue`);
-            if (
-                selection.label === undefined ||
-                selection.filename === undefined ||
-                selection.fileExt === undefined ||
-                selection.body === undefined
-            ) {
-                throw new Error(errorMessages.templateError);
-            }
-            extLogger.logInfo(`Template looks good!`);
 
-            let fileExt: string = selection.fileExt;
+            // Ensuring the file extension
+            let fileExt: string;
+            if (
+                template.fileExt === undefined &&
+                language.fileExt === undefined
+            ) {
+                fileExt = ``;
+            } else if (template.fileExt !== undefined) {
+                fileExt = template.fileExt;
+            } else {
+                fileExt = language.fileExt;
+            }
             if (!String(fileExt).toLocaleLowerCase().startsWith('.')) {
                 fileExt = '.' + fileExt;
             }
@@ -84,14 +108,14 @@ export class ItemCreator {
             let tempFilename: string;
             tempFilename = await AskToUser.forAnItemName(
                 localPath,
-                selection.filename,
+                template.filename,
                 fileExt
             );
 
             // Creating a file Uri
-            let fileAsUri = Uri.file(
-                selectedRootFolder + tempFilename + fileExt
-            );
+            let uriString = selectedRootFolder + tempFilename + fileExt;
+            uriString = path.normalize(uriString);
+            let fileAsUri = Uri.file(uriString);
             let fileExist = await FileSpotter.checkIfFileExist(fileAsUri);
             let counter = 1;
             extLogger.logInfo(`The new file is: ${fileAsUri.fsPath}`);
@@ -110,7 +134,7 @@ export class ItemCreator {
             // Crating the snippet
             let actualSnippet: SnippetString;
             let snippetAsString = '';
-            selection?.body.forEach((element: string) => {
+            template?.body.forEach((element: string) => {
                 snippetAsString += element + '\r';
             });
             extLogger.logInfo(`Template string created!`);
@@ -175,4 +199,5 @@ export class ItemCreator {
     }
 }
 
-export { ItemType };
+function splitLanguage(req: string) {}
+function splitTemplate(req: string) {}
