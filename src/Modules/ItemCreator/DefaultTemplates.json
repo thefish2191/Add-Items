@@ -44,7 +44,7 @@
                     "}"
                 ]
             },
-            "CSharpInterface": {
+            "interface": {
                 "displayName": "Interface",
                 "description": "A C# top level interface.",
                 "filename": "IInterface",
@@ -57,7 +57,7 @@
                     "}"
                 ]
             },
-            "CSGlobalUsing": {
+            "globalUsing": {
                 "displayName": "C# Global Using",
                 "description": "A global using file for .Net6+ projects",
                 "filename": "GlobalUsings",
@@ -92,7 +92,7 @@
                     "namespace [namespace]; // Delete if you created this namespace already"
                 ]
             },
-            "CSharpUnitTest": {
+            "unitTest": {
                 "displayName": "C# Unit Test",
                 "description": "Do unit testing using Xunit",
                 "filename": "Fact",
@@ -114,7 +114,7 @@
                     "}"
                 ]
             },
-            "Unity Script": {
+            "unityScript": {
                 "displayName": "Unity Script",
                 "description": "A standard Unity Script",
                 "filename": "Script",
@@ -139,7 +139,7 @@
                     "}"
                 ]
             },
-            "UnityScriptableObject": {
+            "unityScriptableObject": {
                 "displayName": "Unity ScriptableObject",
                 "description": "A standard unity scriptableObject",
                 "filename": "ScriptableObject",
