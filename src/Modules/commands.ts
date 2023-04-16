@@ -1,7 +1,8 @@
 import { ExtensionContext, commands, Uri, window } from 'vscode';
 import { extLogger, storageMng } from '../extension';
-import { ItemCreator, ItemType } from './ItemCreator/ItemCreator';
+import { ItemCreator } from './ItemCreator/ItemCreator';
 import { AskToUser } from './AskToUser';
+import { ItemType } from './ItemCreator/ItemType';
 
 export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     // Generic Items
@@ -9,6 +10,7 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
         `${extensionName}.addItem`,
         (clicker: Uri, preReq: any[] | string) => {
             extLogger.logInfo(`AddItem command invoked!`);
+            // preReq = 'csharp.class';
             if (preReq instanceof String || typeof preReq === 'string') {
                 extLogger.logInfo(`Requested: ${preReq}`);
                 ItemCreator.createItem(
@@ -59,7 +61,11 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
     let addClass = commands.registerCommand(
         'add-items.addClass',
         (clicker: Uri) => {
-            commands.executeCommand(`add-items.addItem`, clicker, 'CSharpEnum');
+            commands.executeCommand(
+                `add-items.addItem`,
+                clicker,
+                'others.JSON'
+            );
         }
     );
 

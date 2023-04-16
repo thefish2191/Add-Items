@@ -1,12 +1,11 @@
 {
-    "customItem": {
-        "prefix": "customItem",
+    "itemTemplate": {
+        "prefix": "itemTemplate",
         "body": [
-            "\"${1:myItem}\": {",
-            "\t\"displayName\": \"${2:}\",",
-            "\t\"description\": \"${3:}\",",
-            "\t\"filename\": \"${4:}\",",
-            "\t\"fileExt\": \"${5:}\",",
+            "\"${2:item}\": {",
+            "\t\"displayName\": \"${2:item}\",",
+            "\t\"description\": \"${3:A item template}\",",
+            "\t\"filename\": \"${4:item}\",",
             "\t\"body\": [",
             "\t\t\"Line1\",",
             "\t\t\"Line2\",",
@@ -14,6 +13,42 @@
             "\t\t\"Line4\"",
             "\t]",
             "}"
-        ]
+        ],
+        "description": "A new item template to create file using the add-item extension"
+    },
+    "languageTemplate": {
+        "prefix": "languageTemplate",
+        "body": [
+            "\"${1:language}\": {",
+            "    \"displayName\": \"Programming Language\",",
+            "    \"fileExt\": \".txt\",",
+            "    \"description\": \"A shot description.\",",
+            "    \"templates\": {",
+            "        \"${2:class}\": {",
+            "        \t\"displayName\": \"${2:class}\",",
+            "        \t\"description\": \"${3:A class template}\",",
+            "        \t\"filename\": \"${4:class}\",",
+            "        \t\"body\": [",
+            "        \t\t\"Line1\",",
+            "        \t\t\"Line2\",",
+            "        \t\t\"Line3\",",
+            "        \t\t\"Line4\"",
+            "        \t]",
+            "        },",
+            "        \"${5:enum}\": {",
+            "        \t\"displayName\": \"${6:Enum}\",",
+            "        \t\"description\": \"${7:A enum template}\",",
+            "        \t\"filename\": \"${8:enum}\",",
+            "        \t\"body\": [",
+            "        \t\t\"Line1\",",
+            "        \t\t\"Line2\",",
+            "        \t\t\"Line3\",",
+            "        \t\t\"Line4\"",
+            "        \t]",
+            "        }",
+            "    }",
+            "}"
+        ],
+        "description": "A new language entry for the add-items extension"
     }
 }

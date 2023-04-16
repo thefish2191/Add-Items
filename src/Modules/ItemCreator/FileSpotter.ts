@@ -86,13 +86,11 @@ export class FileSpotter {
      * @returns An array of URI of all the matches
      */
     static async findFilesThanMatchPattern(pattern: GlobPattern) {
-        console.time('addReference');
         let matchesDirs: Uri[] = [];
         let rawDirsWithName = await vscode.workspace.findFiles(pattern);
         rawDirsWithName.forEach((element) => {
             matchesDirs.push(element);
         });
-        console.timeEnd('addReference');
         return matchesDirs;
     }
     /**
