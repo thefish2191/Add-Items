@@ -278,6 +278,52 @@
             }
         }
     },
+    "python": {
+        "displayName": "Python",
+        "fileExt": ".py",
+        "description": "A scriptable programming language.",
+        "templates": {
+            "mainScript": {
+                "displayName": "Main Program",
+                "description": "A entry point for a complex program",
+                "filename": "main",
+                "body": [
+                    "# $TM_FILENAME",
+                    "",
+                    "def main():",
+                    "    pass",
+                    "",
+                    "if __name__ == \"__main__\":",
+                    "    main()",
+                    ""
+                ]
+            },
+            "script": {
+                "displayName": "Script",
+                "description": "A simple Python Script",
+                "filename": "script",
+                "body": ["# $TM_FILENAME", "", "print(\"Hello world\")"]
+            },
+            "requirements": {
+                "displayName": "Requirements",
+                "description": "A text file with dependencies for python",
+                "filename": "Requirements",
+                "fileExt": ".txt",
+                "body": [
+                    "arrow",
+                    "python-dateutil",
+                    "six",
+                    "numpy",
+                    "scipy",
+                    "matplotlib",
+                    "pandas",
+                    "bokeh",
+                    "scikit-learn",
+                    "dask"
+                ]
+            }
+        }
+    },
     "others": {
         "displayName": "Other files",
         "description": "Language independent files, such as JSON and XML",

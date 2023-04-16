@@ -1,5 +1,9 @@
 # Add-Items: User defined templates
 
+Written with ❤️ by [theFish2191](https://twitter.com/thefish2191)
+
+---
+
 In this document, you will learn the fundamental concepts for building your own templates using the Add-Items extension.  
 Make sure you have the [add items](https://marketplace.visualstudio.com/items?itemName=TheFish2191.add-items) extension installed and enabled on your `vscode` installation:
 
@@ -52,7 +56,7 @@ I recommend using camelCase notation
 `language` => the programming language, `csharp`, `typeScript`,`python`...  
 `displayName` => The name than will be shown in the input box (more about that latter)  
 `fileExt` => The file extension for the new file that will be created  
-`Description` => Is shown just below the `displayName`  
+`description` => Is shown just below the `displayName`  
 `templates` => The file templates than will be used to create new items.
 
 Let's see how to fill all fields for a `Main` program for C++:
@@ -72,7 +76,9 @@ Any template has 4 properties:
 `filename` => The name the new file will receive, regardless the file content.  
 `body` => The snipped that will be used to fill the file.
 
-The `body` is an array of `strings`, each string represent a new line in the new file. This is actually a `vs code` standard snippet. There is already a (great) official tutorial for that, and you can read it [right here]().
+The `body` is an array of `strings`, each string represent a new line in the new file. This is actually a `vs code` standard snippet. There is already a (great) official tutorial for that, and you can read it [right here](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets). If you already know how to create snippets, then you are good to go!
+
+*There is another property: `fileExt`, nested in the template, this will override the `fileExt` property in the parent programming language, for example for a `html` file for `TypeScript`, you may want to have it under the language `Typescript` and not under `html`, or, the `Requirements` file, for python, it is a `.txt` file, and not a `.py` file. Add it bellow the `filename` property.*
 
 Give it a go, create your own snipped, and use it to create your own files!
 
@@ -107,3 +113,9 @@ Follow the process in the [Create custom items](#creating-custom-items) section,
 ```
 
 The extension will replace the `[namespace]` string for an actual namespace, based on the projects, or the folder structure, when you create the file!
+
+---
+
+If you feel a bit generous, and want to contribute with templates, or any other thing, please do!
+
+Follow [this](https://github.com/thefish2191/Add-Items/issues) link to raise an issue with your template(s), request, feedback, typo report, or anything you want to share with me!
