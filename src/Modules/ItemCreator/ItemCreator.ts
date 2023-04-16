@@ -212,9 +212,9 @@ function splitLanguage(req: string) {
 }
 function splitTemplate(req: string) {
     const langPattern = /[\w]*$/;
-    let lang = req.match(langPattern)?.toString();
-    if (lang === undefined) {
+    let template = req.match(langPattern)?.toString();
+    if (template === undefined) {
         throw new Error('Error at requested template');
     }
-    return lang;
+    return template;
 }

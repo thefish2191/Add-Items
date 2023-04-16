@@ -10,11 +10,14 @@ Written with ❤️ by [theFish2191](https://twitter.com/thefish2191)
 Create files, classes, enums, scripts, json, XML or any other for your favorite programming language!  
 Use the templates given or create your own!
 
+> **Warning**  
+> Version 0.2.0 has breaking changes in the user defined templates
+
 ## How to use
 
 Once the extension is installed on `vscode`, run the command: `add-items: Add item` or `add-items: Add Item (custom)` using the command palette
 
-![additem](Resources/Readme/Instructions/AddItemCommand.png)
+![addItem](Resources/Readme/Instructions/AddItemCommand.png)
 
 or using the context menu
 
