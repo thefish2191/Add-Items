@@ -80,6 +80,15 @@ export class ItemCreator {
                 templatesMap = mapTemplates(
                     templates[language.id]['templates']
                 );
+                // Verifying we have at least one template
+                if (templatesMap.length < 1) {
+                    extLogger.logError(`No languages on the template file!`);
+                    throw new Error(errorMessages.templateFileEmpty);
+                } else {
+                    extLogger.logInfo(
+                        `We found ${languagesMap.length} languages`
+                    );
+                }
                 template = await AskToUser.selectATemplate(
                     templatesMap,
                     itemType
@@ -89,7 +98,7 @@ export class ItemCreator {
             extLogger.logInfo(`User selected: ${template.label}`);
 
             // TODO: Verify the template:
-            extLogger.logActivity(`Verifying the snippet before continue`);
+            // extLogger.logActivity(`Verifying the snippet before continue`);
 
             // Ensuring the file extension
             let fileExt: string;
@@ -107,7 +116,7 @@ export class ItemCreator {
                 fileExt = '.' + fileExt;
             }
 
-            extLogger.logInfo(`Waiting for the user to decide a item name`);
+            extLogger.logInfo(`Waiting for the user to decide an item name`);
             let tempFilename: string;
             tempFilename = await AskToUser.forAnItemName(
                 localPath,

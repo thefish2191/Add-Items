@@ -16,15 +16,15 @@ Then, press `Ctrl+Shift+p` and start typing: `add-items: Open User templates fil
 
 ![OpenUserTemplates](Images/OpenUserTemplates.gif)
 
-There is already one entry created for you: the language TypeScript, with two templates: A class and a Enum.
+There is already one entry created for you: the language TypeScript, with two templates: A class and an Enum.
 
 But let's assume you want to create files for the language `C++`...
 
 ## Creating custom items
 
-To simplify the process for you, we will use one of the two snippets to fast create a new language entry, this time for `C++`, delete the entry for JavaScript if you want, or feel free to edit it, add more items, or remove them... We will not use that in this very tutorial.
+To simplify the process for you, we will use one of the two snippets to fast create a new language entry, this time for `C++`, delete the entry for `JavaScript` if you want, or feel free to edit it, add more items, or remove them... We will not use that in this very tutorial.
 
-Just start typing `languageTemplate` in the new file, and press tab to auto-complete with the snipped (if you didn't deleted the javascript entry, add a comma at the end of the entry).
+Just start typing `languageTemplate` in the new file, and press tab to auto-complete with the snipped (if you didn't delete the `JavaScript` entry, add a comma at the end of the entry).
 
 This is (part of) the snippet provided for you:
 
@@ -63,7 +63,7 @@ Let's see how to fill all fields for a `Main` program for C++:
 
 ![languageEntry](Images/LanguageEntry.gif)
 
-The templates property is quite important because it holds all the templates, in the previous example we added only one, but let's add another one:
+The templates' property is quite important because it holds all the templates, in the previous example we added only one, but let's add another one:
 
 - Add a comma at the end of the `main` obj and start typing `itemTemplate` as shown in the following gift
 
@@ -73,10 +73,10 @@ Any template has 4 properties:
 
 `displayName` => Is show in a fancy way when creating a new item  
 `description` => Is show just below the `displayName`  
-`filename` => The name the new file will receive, regardless the file content.  
+`filename` => The name the new file will receive, regardless of the file content.  
 `body` => The snipped that will be used to fill the file.
 
-The `body` is an array of `strings`, each string represent a new line in the new file. This is actually a `vs code` standard snippet. There is already a (great) official tutorial for that, and you can read it [right here](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets). If you already know how to create snippets, then you are good to go!
+The `body` is an array of `strings`, each string represents a new line in the new file. This is actually a `vs code` standard snippet. There is already a (great) official tutorial for that, and you can read it [right here](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets). If you already know how to create snippets, then you are good to go!
 
 *There is another property: `fileExt`, nested in the template, this will override the `fileExt` property in the parent programming language, for example for a `html` file for `TypeScript`, you may want to have it under the language `Typescript` and not under `html`, or, the `Requirements` file, for python, it is a `.txt` file, and not a `.py` file. Add it bellow the `filename` property.*
 

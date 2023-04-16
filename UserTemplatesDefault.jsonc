@@ -2,7 +2,11 @@
     // Place your custom templates here
     // Start typing "languageTemplate" and use the provided snipped
     // to create a new language entry, or use "itemTemplate" to create
-    // a new template for a language, inside the "templates" property
+    // a new template for a language, inside the "templates" property.
+    // Follow this link to read a tutorial about how to create a custom
+    // template for your favorite programming language:
+    // https://github.com/thefish2191/Add-Items/tree/Live/Resources/UserTemplates/UserDefinedTemplates.md
+    // Please enjoy!
     "javaScript": {
         "displayName": "JavaScript",
         "fileExt": ".js",
@@ -11,7 +15,7 @@
             "class": {
                 "displayName": "Class",
                 "description": "Simple class",
-                "filename": "class",
+                "filename": "Class",
                 "body": [
                     "class $TM_FILENAME_BASE {",
                     "  constructor(name) {",
