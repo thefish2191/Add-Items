@@ -17,7 +17,7 @@ export class AskToUser {
     static createTemplateFile() {
         window
             .showErrorMessage(
-                `The templates file does not exist. Do you want to create it know?`,
+                `The templates file does not exist. Do you want to create it now?`,
                 'Yes',
                 'No'
             )
