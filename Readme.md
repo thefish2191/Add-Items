@@ -50,6 +50,12 @@ Follow [this](https://github.com/thefish2191/Add-Items/issues) link to raise an 
 
 ---
 
+The following context menu is available for C#, using my other extension: [C# stuff](https://marketplace.visualstudio.com/items?itemName=TheFish2191.csharp-stuff).
+
+![CSharpMenu](Resources/Readme/csharp-menu.png)
+
+---
+
 ## Special Thanks to
 
 ### Flaticon.com
