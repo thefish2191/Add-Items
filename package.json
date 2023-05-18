@@ -21,7 +21,9 @@
         "Custom Items",
         "Custom Files",
         "C#",
-        "C# extensions"
+        "C# extensions",
+        "Snippets",
+        "Custom snippets"
     ],
     "activationEvents": [
         "onStartupFinished"
