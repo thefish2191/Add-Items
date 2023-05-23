@@ -35,7 +35,17 @@ export function mapTemplates(templates: any) {
             body: templates[template]['body'],
         });
     }
-    return templatesMap;
+    return templatesMap.sort((a, b) => {
+        let firstLabel = a.label,
+            secondLabel = b.label;
+        if (firstLabel < secondLabel) {
+            return -1;
+        }
+        if (secondLabel > firstLabel) {
+            return 1;
+        }
+        return 0;
+    });
 }
 export function mapLanguages(templates: any) {
     let templatesMap = [];
@@ -47,5 +57,15 @@ export function mapLanguages(templates: any) {
             fileExt: templates[template]['fileExt'],
         });
     }
-    return templatesMap;
+    return templatesMap.sort((langA, langB) => {
+        let firstLang = langA.label,
+            secondLang = langB.label;
+        if (firstLang < secondLang) {
+            return -1;
+        }
+        if (secondLang > firstLang) {
+            return 1;
+        }
+        return 0;
+    });
 }

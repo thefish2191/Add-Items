@@ -1,6 +1,6 @@
 {
     "csharp": {
-        "displayName": "CSharp",
+        "displayName": "C#",
         "fileExt": ".cs",
         "description": "A general-purpose high-level programming language supporting multiple paradigms.",
         "templates": {
@@ -58,7 +58,7 @@
                 ]
             },
             "globalUsing": {
-                "displayName": "C# Global Using",
+                "displayName": "Global Using",
                 "description": "A global using file for .Net6+ projects",
                 "filename": "GlobalUsings",
                 "body": [
@@ -93,7 +93,7 @@
                 ]
             },
             "unitTest": {
-                "displayName": "C# Unit Test",
+                "displayName": "Unit Test",
                 "description": "Do unit testing using Xunit",
                 "filename": "Fact",
                 "body": [
@@ -164,12 +164,12 @@
         }
     },
     "csharpLegacy": {
-        "displayName": "CSharp (Legacy)",
+        "displayName": "C# (Legacy)",
         "fileExt": ".cs",
         "description": "A general-purpose high-level programming language supporting multiple paradigms.",
         "templates": {
             "class": {
-                "displayName": "C# Legacy Class",
+                "displayName": "Class",
                 "description": "A Class for legacy .Net",
                 "filename": "Class",
                 "body": [
@@ -188,7 +188,7 @@
                 ]
             },
             "enum": {
-                "displayName": "C# Legacy Enum",
+                "displayName": "Enum",
                 "description": "A Enum for legacy .Net",
                 "filename": "Enum",
                 "body": [
@@ -207,7 +207,7 @@
                 ]
             },
             "struct": {
-                "displayName": "C# Legacy Struct",
+                "displayName": "Struct",
                 "description": "A Struct for legacy .Net",
                 "filename": "Struct",
                 "body": [
@@ -226,7 +226,7 @@
                 ]
             },
             "interface": {
-                "displayName": "C# Legacy Interface",
+                "displayName": "Interface",
                 "description": "A Interface for legacy .Net",
                 "filename": "IInterface",
                 "body": [
