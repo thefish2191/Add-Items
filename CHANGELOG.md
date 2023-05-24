@@ -4,6 +4,10 @@ All notable changes to the "add-items" extension will be documented in this file
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.2.3
+
+- Changes on the drop down menu, it now order items
+
 ## 0.2.0
 
 - Breaking changes!
