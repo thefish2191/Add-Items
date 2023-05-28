@@ -10,10 +10,8 @@ export let storageMng: StorageManager;
 
 export async function activate(context: vscode.ExtensionContext) {
     extLogger = new Logger(extensionName, context);
-    storageMng = new StorageManager(extensionName, context);
     extLogger.logInfo(`${extensionName} is now up and running!`);
-
+    storageMng = new StorageManager(extensionName, context);
     registerCommands(extensionName, context);
 }
-
-export function deactivate() {}
+// export function deactivate() {}

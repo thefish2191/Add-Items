@@ -36,8 +36,8 @@ export function mapTemplates(templates: any) {
         });
     }
     return templatesMap.sort((a, b) => {
-        let firstLabel = a.label,
-            secondLabel = b.label;
+        let firstLabel = a,
+            secondLabel = b;
         if (firstLabel < secondLabel) {
             return -1;
         }
@@ -58,8 +58,8 @@ export function mapLanguages(templates: any) {
         });
     }
     return templatesMap.sort((langA, langB) => {
-        let firstLang = langA.label,
-            secondLang = langB.label;
+        let firstLang = langA.id,
+            secondLang = langB.id;
         if (firstLang < secondLang) {
             return -1;
         }

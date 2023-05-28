@@ -98,7 +98,6 @@ export class ItemCreator {
             extLogger.logInfo(`User selected: ${template.label}`);
 
             // TODO: Verify the template:
-            // extLogger.logActivity(`Verifying the snippet before continue`);
 
             // Ensuring the file extension
             let fileExt: string;
