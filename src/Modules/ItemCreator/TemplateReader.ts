@@ -28,6 +28,7 @@ export function mapTemplates(templates: any) {
     let templatesMap = [];
     for (let template in templates) {
         templatesMap.push({
+            id: template,
             label: templates[template]['displayName'],
             detail: templates[template]['description'],
             filename: templates[template]['filename'],
@@ -36,8 +37,8 @@ export function mapTemplates(templates: any) {
         });
     }
     return templatesMap.sort((a, b) => {
-        let firstLabel = a,
-            secondLabel = b;
+        let firstLabel = a.id,
+            secondLabel = b.id;
         if (firstLabel < secondLabel) {
             return -1;
         }
