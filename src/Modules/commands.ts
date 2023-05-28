@@ -24,6 +24,7 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
             }
         }
     );
+
     // Generic item custom
     let addItemCustomCmd = commands.registerCommand(
         `${extensionName}.addItemCustom`,
@@ -58,23 +59,12 @@ export function registerCommands(extensionName: string, ctx: ExtensionContext) {
             storageMng.openUserTemplates();
         }
     );
-    let addClass = commands.registerCommand(
-        'add-items.addClass',
-        (clicker: Uri) => {
-            commands.executeCommand(
-                `add-items.addItem`,
-                clicker,
-                'others.JSON'
-            );
-        }
-    );
 
     // Register the commands
     ctx.subscriptions.push(
         addItemCmd,
         addItemCustomCmd,
         restoreTemplatesCmd,
-        openUserTemplates,
-        addClass
+        openUserTemplates
     );
 }

@@ -1,7 +1,7 @@
 {
     "csharp": {
         "displayName": "C#",
-        "fileExt": ".cs",
+        "fileExt": "cs",
         "description": "A general-purpose high-level programming language supporting multiple paradigms.",
         "templates": {
             "class": {
@@ -21,7 +21,6 @@
                 "displayName": "Enum",
                 "filename": "Enum",
                 "description": "A C# top level enum.",
-                "fileExt": ".cs",
                 "body": [
                     "namespace [namespace];",
                     "",
@@ -163,9 +162,9 @@
             }
         }
     },
-    "csharpLegacy": {
+    "zCsharpLegacy": {
         "displayName": "C# (Legacy)",
-        "fileExt": ".cs",
+        "fileExt": "cs",
         "description": "A general-purpose high-level programming language supporting multiple paradigms.",
         "templates": {
             "class": {
@@ -248,7 +247,7 @@
     },
     "typescript": {
         "displayName": "TypeScript",
-        "fileExt": ".ts",
+        "fileExt": "ts",
         "description": "A high-level programming language developed and maintained by Microsoft",
         "templates": {
             "class": {
@@ -280,7 +279,7 @@
     },
     "python": {
         "displayName": "Python",
-        "fileExt": ".py",
+        "fileExt": "py",
         "description": "A scriptable programming language.",
         "templates": {
             "mainScript": {
@@ -308,7 +307,7 @@
                 "displayName": "Requirements",
                 "description": "A text file with dependencies for python",
                 "filename": "Requirements",
-                "fileExt": ".txt",
+                "fileExt": "txt",
                 "body": [
                     "arrow",
                     "python-dateutil",
@@ -331,8 +330,8 @@
             "XML": {
                 "displayName": "XML file",
                 "description": "A basic xml file",
-                "filename": "myXml",
-                "fileExt": ".xml",
+                "filename": "XMLFile",
+                "fileExt": "xml",
                 "body": [
                     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
                     "<$TM_FILENAME_BASE>",
@@ -343,8 +342,8 @@
             "JSON": {
                 "displayName": "JSON file",
                 "description": "A empty json file",
-                "filename": "myJson",
-                "fileExt": ".json",
+                "filename": "JsonFile",
+                "fileExt": "json",
                 "body": ["{", "    $0", "}"]
             }
         }

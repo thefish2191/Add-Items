@@ -2,7 +2,12 @@
 
 All notable changes to the "add-items" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## 0.4.0
+
+- Removed unnecessary (test) command from live version
+- Removed unnecessary `fileExt` parameter from templates
+- Ordering items now happens by id, meaning, than it is now possible to change the order of the languages and templates without exposing the changes.
+- Improved extension start-up time
 
 ## 0.2.3
 

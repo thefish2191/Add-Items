@@ -25,17 +25,17 @@ export class StorageManager {
                 'UserTemplatesDefault.jsonc'
             )
         );
-        this.ensureStorage();
+        // workspace.fs.createDirectory(this.ctx.globalStorageUri);
+        // this.ensureStorage();
     }
     private async ensureStorage() {
-        try {
-            workspace.fs.createDirectory(this.ctx.globalStorageUri);
-        } catch (error) {
-            if (error instanceof Error) {
-                extLogger.logError(error.name);
-                extLogger.logError(error.message);
-            }
-        }
+        // try {
+        // } catch (error) {
+        //     if (error instanceof Error) {
+        //         extLogger.logError(error.name);
+        //         extLogger.logError(error.message);
+        //     }
+        // }
     }
     public async restoreDefaultUserTemplates(force: boolean = false) {
         try {
