@@ -1,6 +1,7 @@
 import { Uri } from 'vscode';
 import {
     csprojPattern,
+    invalidNamespaceChars,
     multiplePeriodRegex,
     sepRegex,
     trimPeriods,
@@ -15,7 +16,7 @@ export class ProjectGatherer {
      * @param rootFolder The root directory, where vs code is open used to generate a raw namespace.
      * @returns A fancy and shiny namespace.
      */
-    static async generateNamespace(
+    static async generateCSNamespace(
         targetFile: string,
         rootFolder: string
     ): Promise<string> {
@@ -63,6 +64,7 @@ export class ProjectGatherer {
         dir = dir.replace(sepRegex, '.');
         dir = dir.replace(multiplePeriodRegex, '.');
         dir = dir.replace(trimPeriods, '');
+        dir = dir.replace(invalidNamespaceChars, '');
         return dir;
     }
     static generateRawNamespace(target: string, rootFolder: string) {
