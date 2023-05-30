@@ -155,7 +155,7 @@ export class ItemCreator {
             ) {
                 let nameSP: string = '';
                 extLogger.logActivity(`Resolving DotNet namespace...`);
-                nameSP = await ProjectGatherer.generateNamespace(
+                nameSP = await ProjectGatherer.generateCSNamespace(
                     fileAsUri!.fsPath,
                     selectedRootFolder
                 );
