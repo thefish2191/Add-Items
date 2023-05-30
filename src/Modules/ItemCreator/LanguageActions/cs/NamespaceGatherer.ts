@@ -1,6 +1,7 @@
 import { Uri } from 'vscode';
 import {
     csprojPattern,
+    invalidNamespaceChars,
     multiplePeriodRegex,
     sepRegex,
     trimPeriods,
@@ -63,6 +64,7 @@ export class ProjectGatherer {
         dir = dir.replace(sepRegex, '.');
         dir = dir.replace(multiplePeriodRegex, '.');
         dir = dir.replace(trimPeriods, '');
+        dir = dir.replace(invalidNamespaceChars, '');
         return dir;
     }
     static generateRawNamespace(target: string, rootFolder: string) {

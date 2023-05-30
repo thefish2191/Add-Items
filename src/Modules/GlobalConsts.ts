@@ -24,3 +24,7 @@ export const csprojPattern = '**/*.csproj';
 
 // Matches the following: `[namespaces]`
 export const namespacePattern = /(\[namespace\])/gm;
+
+// TODO: Research a better regex for this
+// Regex for matching invalid characters in a namespace
+export const invalidNamespaceChars = /[<>:"|?*/\\\-+\s]/gm;
