@@ -1,6 +1,6 @@
 {
     "csharp": {
-        "displayName": "C#",
+        "displayName": "C# - Modern",
         "fileExt": "cs",
         "description": "A general-purpose high-level programming language supporting multiple paradigms.",
         "templates": {
@@ -279,8 +279,8 @@
     },
     "python": {
         "displayName": "Python",
-        "fileExt": "py",
         "description": "A scriptable programming language.",
+        "fileExt": "py",
         "templates": {
             "mainScript": {
                 "displayName": "Main Program",
@@ -345,6 +345,33 @@
                 "filename": "JsonFile",
                 "fileExt": "json",
                 "body": ["{", "    $0", "}"]
+            }
+        }
+    },
+    "RazorPages": {
+        "displayName": "Razor Pages",
+        "fileExt": "cshtml",
+        "description": "A Razor Page is an ASP.NET Core MVC view that can be requested directly, run without a controller, and it's ideal for serving web pages that are a mix of HTML, CSS, and server-side code.",
+        "templates": {
+            "Layout": {
+                "displayName": "Layout",
+                "description": "Razor view layout page",
+                "filename": "_Layout",
+                "body": [
+                    "<!DOCTYPE html>",
+                    "",
+                    "<html>",
+                    "<head>",
+                    "\t<meta name=\"viewport\" content=\"width=device-width\" />",
+                    "\t<title>@ViewBag.Title</title>",
+                    "</head>",
+                    "<body>",
+                    "\t<div>",
+                    "\t\t@RenderBody()",
+                    "\t</div>",
+                    "</body>",
+                    "</html>"
+                ]
             }
         }
     }

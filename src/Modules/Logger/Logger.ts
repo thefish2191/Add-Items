@@ -28,7 +28,7 @@ export class Logger {
         this.loggingChannel.appendLine(`  ❌❌ `);
     }
     public logSuccess(message: string) {
-        this.loggingChannel.appendLine(`   ✅✅ ` + message);
+        this.loggingChannel.appendLine(`  ✅✅ ` + message);
         this.loggingChannel.appendLine(``);
     }
     public reportWarning(message: string) {

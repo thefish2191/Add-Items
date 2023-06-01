@@ -1,5 +1,5 @@
 import { commands, SnippetString, Uri, window, workspace } from 'vscode';
-import { storageMng, extLogger } from '../../extension';
+import { extLogger } from '../../extension';
 import * as errorMessages from './../Logger/ErrorMessages';
 import { AskToUser } from '../AskToUser';
 import { FileSpotter } from './FileSpotter';
@@ -14,12 +14,13 @@ export class ItemCreator {
     static async createItem(
         clicker: Uri,
         itemType: ItemType,
-        preReq: string | undefined = undefined
+        preRequestedItem: string | undefined = undefined
     ) {
         try {
-            // Prepare the file according to vs work workspace
+            // Stops the programs if the user is not in a workspace
             let selectedRootFolder = await FileSpotter.determinateRootFolder(
-                clicker
+                clicker,
+                itemType
             );
             if (selectedRootFolder === undefined) {
                 vscode.window.showErrorMessage(`Please select a valid folder`);
@@ -35,81 +36,88 @@ export class ItemCreator {
             }
             extLogger.logInfo(`Local path is: ${localPath}`);
 
-            // Getting the template file
-            let templates: any = await getTemplates(itemType);
-
-            // Mapping the languages in the template files
-            let languagesMap: any[] = mapLanguages(templates);
+            // Reading the templates file, and mapping the languages, and templates
+            let rawTemplateFile: any = await getTemplates(itemType);
+            let languagesArray: any[] = mapLanguages(rawTemplateFile);
+            let selectedLanguage: any = [];
+            let selectedTemplate: any = [];
+            let selectedLanguageTemplates: any = [];
 
             // Verifying we have at least one language
-            if (languagesMap.length < 1) {
+            if (languagesArray.length < 1) {
                 extLogger.logError(`No languages on the template file!`);
                 throw new Error(errorMessages.templateFileEmpty);
             } else {
-                extLogger.logInfo(`We found ${languagesMap.length} languages`);
+                extLogger.logInfo(
+                    `We found ${languagesArray.length} languages to work with!`
+                );
             }
-
             extLogger.logActivity(
                 `Waiting for the user to select a language...`
             );
-            // getting the stuff for pre requested items
-            let preLang: any;
-            let preTemplate: any;
-            if (preReq !== undefined) {
-                preLang = splitLanguage(preReq);
-                preTemplate = splitTemplate(preReq);
-            }
-            // let user select the language they want before continue
-            let language: any;
-            if (preReq !== undefined) {
-                language = templates[preLang];
+
+            // Allows the user to select a language, if the user has a pre-defined language, we will use that
+            let preSelectedLanguage: any;
+            let preSelectedTemplate: any;
+            if (preRequestedItem !== undefined) {
+                preSelectedLanguage = splitLanguageString(preRequestedItem);
+                preSelectedTemplate = splitTemplate(preRequestedItem);
+                selectedLanguage = rawTemplateFile[preSelectedLanguage];
+                selectedLanguageTemplates = selectedLanguage.templates;
             } else {
-                language = await AskToUser.selectALanguage(languagesMap);
-                extLogger.logInfo(`User selected the language: ${language.id}`);
+                selectedLanguage = await AskToUser.selectALanguage(
+                    languagesArray
+                );
             }
+            extLogger.logInfo(`User selected: ${selectedLanguage.displayName}`);
 
-            // Mapping the templates
-            let templatesMap: any[];
-
+            extLogger.logActivity(
+                'Waiting for the user to select a template...'
+            );
             // Let the user select a template, based on the language
-            let template: any;
-            if (preReq !== undefined) {
-                extLogger.logInfo(`Pre-defined template requested: ${preReq}`);
-                template = templates[preLang]['templates'][preTemplate];
+            if (
+                (preSelectedTemplate !== undefined ||
+                    preSelectedTemplate !== '') &&
+                preRequestedItem !== undefined
+            ) {
+                selectedTemplate =
+                    rawTemplateFile[preSelectedLanguage]['templates'][
+                        preSelectedTemplate
+                    ];
             } else {
-                templatesMap = mapTemplates(
-                    templates[language.id]['templates']
+                selectedLanguageTemplates = mapTemplates(
+                    selectedLanguage.templates
                 );
                 // Verifying we have at least one template
-                if (templatesMap.length < 1) {
-                    extLogger.logError(`No languages on the template file!`);
+                if (selectedLanguageTemplates.length < 1) {
+                    extLogger.logError(
+                        `No templates for the selected language!`
+                    );
                     throw new Error(errorMessages.templateFileEmpty);
                 } else {
                     extLogger.logInfo(
-                        `We found ${languagesMap.length} languages`
+                        `We found ${selectedLanguageTemplates.length} templates to work with!`
                     );
                 }
-                template = await AskToUser.selectATemplate(
-                    templatesMap,
+                selectedTemplate = await AskToUser.selectATemplate(
+                    selectedLanguageTemplates,
                     itemType
                 );
             }
 
-            extLogger.logInfo(`User selected: ${template.label}`);
-
-            // TODO: Verify the template:
+            extLogger.logInfo(`User selected: ${selectedTemplate.displayName}`);
 
             // Ensuring the file extension
             let fileExt: string;
             if (
-                template.fileExt === undefined &&
-                language.fileExt === undefined
+                selectedTemplate['fileExt'] === undefined &&
+                selectedLanguage.fileExt === undefined
             ) {
-                fileExt = ``;
-            } else if (template.fileExt !== undefined) {
-                fileExt = template.fileExt;
+                fileExt = `.txt`;
+            } else if (selectedTemplate.fileExt !== undefined) {
+                fileExt = selectedTemplate.fileExt;
             } else {
-                fileExt = language.fileExt;
+                fileExt = selectedLanguage.fileExt;
             }
             if (!String(fileExt).toLocaleLowerCase().startsWith('.')) {
                 fileExt = '.' + fileExt;
@@ -119,7 +127,7 @@ export class ItemCreator {
             let tempFilename: string;
             tempFilename = await AskToUser.forAnItemName(
                 localPath,
-                template.filename,
+                selectedTemplate.filename,
                 fileExt
             );
 
@@ -145,7 +153,7 @@ export class ItemCreator {
             // Crating the snippet
             let actualSnippet: SnippetString;
             let snippetAsString = '';
-            template?.body.forEach((element: string) => {
+            selectedTemplate?.body.forEach((element: string) => {
                 snippetAsString += element + '\r';
             });
             extLogger.logInfo(`Template string created!`);
@@ -163,6 +171,7 @@ export class ItemCreator {
                     snippetAsString,
                     nameSP
                 );
+                extLogger.logInfo(`Namespace resolved: ${nameSP}`);
             } else {
                 actualSnippet = TemplateParser.newSnippet(snippetAsString);
                 extLogger.logInfo(`There is no need for a namespace`);
@@ -170,12 +179,17 @@ export class ItemCreator {
 
             // Creating the file and adding the snippet
             if (!fileExist) {
-                extLogger.logActivity(`Creating the file now...`);
+                extLogger.logActivity(`Creating the actual file now...`);
                 await workspace.fs.writeFile(fileAsUri, new Uint8Array());
-                commands.executeCommand('vscode.open', fileAsUri).then(() => {
-                    extLogger.logActivity(`Inserting the snippet`);
-                    window.activeTextEditor?.insertSnippet(actualSnippet);
-                });
+                commands
+                    .executeCommand('vscode.open', fileAsUri)
+                    .then(() => {
+                        extLogger.logActivity(`Inserting the snippet...`);
+                        window.activeTextEditor?.insertSnippet(actualSnippet);
+                    })
+                    .then(() => {
+                        extLogger.logSuccess(`Snippet inserted!!`);
+                    });
             } else {
                 throw new Error(errorMessages.fileExistMessage);
             }
@@ -210,7 +224,7 @@ export class ItemCreator {
     }
 }
 
-function splitLanguage(req: string) {
+function splitLanguageString(req: string) {
     const langPattern = /^[\w]*/;
     let lang = req.match(langPattern)?.toString();
     if (lang === undefined) {
