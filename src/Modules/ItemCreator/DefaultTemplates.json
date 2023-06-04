@@ -179,7 +179,7 @@
                     "    }",
                     "}"
                 ],
-                "sibling": "RazorPages.PageEmpty"
+                "sibling": "razorPages.emptyPage"
             }
         }
     },
@@ -373,13 +373,13 @@
             }
         }
     },
-    "RazorPages": {
+    "razorPages": {
         "namespace": false,
         "displayName": "Razor Pages",
         "fileExt": "cshtml",
         "description": "A Razor Page is an ASP.NET Core MVC view ideal for serving web pages that are a mix of HTML, CSS, and server-side code.",
         "templates": {
-            "Layout": {
+            "layout": {
                 "displayName": "Layout",
                 "description": "Razor view layout page",
                 "filename": "_Layout",
@@ -405,13 +405,25 @@
                 "filename": "_ViewStart",
                 "body": ["@{", "\tLayout = \"_Layout\";", "}"]
             },
-            "Component": {
+            "component": {
                 "displayName": "Component",
-                "description": "Razor view component",
+                "description": "Razor empty view component",
                 "filename": "Component",
                 "body": ["<h3>Component</h3>", "", "@code {", "", "}"]
             },
-            "PageEmpty": {
+            "emptyPage": {
+                "namespace": true,
+                "displayName": "Empty Page",
+                "description": "Empty Razor page",
+                "filename": "Index",
+                "body": [
+                    "@page",
+                    "@model [namespace].${TM_FILENAME_BASE}Model",
+                    "@{",
+                    "}"
+                ]
+            },
+            "emptyPageWithModel": {
                 "namespace": true,
                 "displayName": "Page Empty and Model (Separated)",
                 "description": "Empty Razor page",
@@ -424,7 +436,7 @@
                 ],
                 "sibling": "csharp.razorModel"
             },
-            "PageEmptySingleFile": {
+            "emptyPageSingleFile": {
                 "namespace": true,
                 "displayName": "Page Empty (Single File)",
                 "description": "Empty Razor page",

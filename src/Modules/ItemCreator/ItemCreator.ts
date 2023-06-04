@@ -202,10 +202,10 @@ export class ItemCreator {
                             extLogger.logActivity(
                                 'Closing the sibling file...'
                             );
-                            vscode.commands.executeCommand(
-                                'workbench.action.closeActiveEditor'
-                            );
-                            extLogger.logSuccess(`Sibling file closed!!`);
+                            // vscode.commands.executeCommand(
+                            //     'workbench.action.closeActiveEditor'
+                            // );
+                            // extLogger.logSuccess(`Sibling file closed!!`);
                         }
                         if (
                             selectedTemplate.sibling !== undefined &&

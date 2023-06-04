@@ -2,6 +2,24 @@
 
 All notable changes to the "add-items" extension will be documented in this file.
 
+## 0.6.2
+
+- Fixed minor bug in the naming of the razor templates
+
+## 0.6.1
+
+- Fixed wrong naming of the razor templates
+- Added a "new" razor template: Razor page (empty)
+
+## 0.6.0
+
+- A method to create two files at the same time was added!
+- Improved the way we organize files in the drop down menu
+- Added 1 CS template: Code behind for razor pages
+- Added 5 Razor templates
+- Removed unnecessary data in user defined templates
+- Improvements at the Logger class
+
 ## 0.4.0
 
 - Removed unnecessary (test) command from live version
