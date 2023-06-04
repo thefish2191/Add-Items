@@ -1,11 +1,12 @@
 {
     "itemTemplate": {
-        "prefix": "itemTemplate",
+        "prefix": "itemTemplate1",
         "body": [
             "\"${2:item}\": {",
             "\t\"displayName\": \"${2:item}\",",
             "\t\"description\": \"${3:A item template}\",",
             "\t\"filename\": \"${4:item}\",",
+            "\t\"namespace\": \"true\",",
             "\t\"body\": [",
             "\t\t\"Line1\",",
             "\t\t\"Line2\",",
@@ -23,6 +24,7 @@
             "    \"displayName\": \"Programming Language\",",
             "    \"fileExt\": \".txt\",",
             "    \"description\": \"A shot description.\",",
+            "    \"namespace\": \"true\",",
             "    \"templates\": {",
             "        \"${2:class}\": {",
             "        \t\"displayName\": \"${2:class}\",",

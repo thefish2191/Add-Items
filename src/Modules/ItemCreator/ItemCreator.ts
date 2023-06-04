@@ -150,7 +150,7 @@ export class ItemCreator {
                 counter++;
             }
 
-            // Crating the snippet
+            // Creating the snippet
             let actualSnippet: SnippetString;
             let snippetAsString = '';
             selectedTemplate?.body.forEach((element: string) => {
@@ -158,8 +158,8 @@ export class ItemCreator {
             });
             extLogger.logInfo(`Template string created!`);
             if (
-                fileExt.toLocaleLowerCase() === '.cs' ||
-                fileExt.toLowerCase() === '.fs'
+                selectedLanguage.namespace === true ||
+                selectedTemplate.namespace === true
             ) {
                 let nameSP: string = '';
                 extLogger.logActivity(`Resolving DotNet namespace...`);

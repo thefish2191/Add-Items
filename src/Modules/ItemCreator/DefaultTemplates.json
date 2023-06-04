@@ -1,8 +1,9 @@
 {
     "csharp": {
-        "displayName": "C# - Modern",
+        "displayName": "C#",
         "fileExt": "cs",
         "description": "A general-purpose high-level programming language supporting multiple paradigms.",
+        "namespace": true,
         "templates": {
             "class": {
                 "displayName": "Class",
@@ -159,13 +160,34 @@
                     "    }",
                     "}"
                 ]
+            },
+            "razorModel": {
+                "displayName": "Razor Model",
+                "description": "Razor page model",
+                "fileExt": "cshtml.cs",
+                "filename": "ModelName",
+                "body": [
+                    "using Microsoft.AspNetCore.Mvc;",
+                    "using Microsoft.AspNetCore.Mvc.RazorPages;",
+                    "",
+                    "namespace [namespace]",
+                    "{",
+                    "    public class ${TM_FILENAME_BASE/(.cshtml)//g}Model : PageModel",
+                    "    {",
+                    "        public void OnGet()",
+                    "        {",
+                    "        }",
+                    "    }",
+                    "}"
+                ]
             }
         }
     },
-    "zCsharpLegacy": {
+    "CsharpLegacy": {
         "displayName": "C# (Legacy)",
         "fileExt": "cs",
         "description": "A general-purpose high-level programming language supporting multiple paradigms.",
+        "namespace": true,
         "templates": {
             "class": {
                 "displayName": "Class",
@@ -249,6 +271,7 @@
         "displayName": "TypeScript",
         "fileExt": "ts",
         "description": "A high-level programming language developed and maintained by Microsoft",
+        "namespace": false,
         "templates": {
             "class": {
                 "displayName": "Class",
@@ -281,6 +304,7 @@
         "displayName": "Python",
         "description": "A scriptable programming language.",
         "fileExt": "py",
+        "namespace": false,
         "templates": {
             "mainScript": {
                 "displayName": "Main Program",
@@ -326,6 +350,7 @@
     "others": {
         "displayName": "Other files",
         "description": "Language independent files, such as JSON and XML",
+        "namespace": false,
         "templates": {
             "XML": {
                 "displayName": "XML file",
@@ -349,9 +374,10 @@
         }
     },
     "RazorPages": {
+        "namespace": false,
         "displayName": "Razor Pages",
         "fileExt": "cshtml",
-        "description": "A Razor Page is an ASP.NET Core MVC view that can be requested directly, run without a controller, and it's ideal for serving web pages that are a mix of HTML, CSS, and server-side code.",
+        "description": "A Razor Page is an ASP.NET Core MVC view ideal for serving web pages that are a mix of HTML, CSS, and server-side code.",
         "templates": {
             "Layout": {
                 "displayName": "Layout",
@@ -371,6 +397,30 @@
                     "\t</div>",
                     "</body>",
                     "</html>"
+                ]
+            },
+            "viewStart": {
+                "displayName": "View Start",
+                "description": "Used to set the default layout page for razor views",
+                "filename": "_ViewStart",
+                "body": ["@{", "\tLayout = \"_Layout\";", "}"]
+            },
+            "Component": {
+                "displayName": "Component",
+                "description": "Razor view component",
+                "filename": "Component",
+                "body": ["<h3>Component</h3>", "", "@code {", "", "}"]
+            },
+            "PageEmpty": {
+                "namespace": true,
+                "displayName": "Page Empty",
+                "description": "Empty Razor page",
+                "filename": "Index",
+                "body": [
+                    "@page",
+                    "@model [namespace].${TM_FILENAME_BASE}Model",
+                    "@{",
+                    "}"
                 ]
             }
         }

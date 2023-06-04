@@ -56,6 +56,7 @@ export function mapTemplates(templates: any) {
             filename: templates[template]['filename'],
             fileExt: templates[template]['fileExt'],
             body: templates[template]['body'],
+            namespace: templates[template]['namespace'],
         });
     }
     return templatesMapped.sort((a, b) => {
