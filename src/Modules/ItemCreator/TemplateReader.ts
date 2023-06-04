@@ -32,6 +32,7 @@ export function mapLanguages(templates: any) {
             detail: templates[template]['description'],
             fileExt: templates[template]['fileExt'],
             templates: templates[template]['templates'],
+            namespace: templates[template]['namespace'],
         });
     }
     return templatesMap.sort((langA, langB) => {
@@ -57,6 +58,7 @@ export function mapTemplates(templates: any) {
             fileExt: templates[template]['fileExt'],
             body: templates[template]['body'],
             namespace: templates[template]['namespace'],
+            sibling: templates[template]['sibling'],
         });
     }
     return templatesMapped.sort((a, b) => {

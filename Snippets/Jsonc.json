@@ -1,6 +1,6 @@
 {
     "itemTemplate": {
-        "prefix": "itemTemplate1",
+        "prefix": "itemTemplate",
         "body": [
             "\"${2:item}\": {",
             "\t\"displayName\": \"${2:item}\",",

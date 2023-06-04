@@ -14,7 +14,9 @@ export class ItemCreator {
     static async createItem(
         clicker: Uri,
         itemType: ItemType,
-        preRequestedItem: string | undefined = undefined
+        preRequestedItem: string | undefined = undefined,
+        firstTime: boolean = true,
+        parentName: string = ''
     ) {
         try {
             // Stops the programs if the user is not in a workspace
@@ -47,14 +49,7 @@ export class ItemCreator {
             if (languagesArray.length < 1) {
                 extLogger.logError(`No languages on the template file!`);
                 throw new Error(errorMessages.templateFileEmpty);
-            } else {
-                extLogger.logInfo(
-                    `We found ${languagesArray.length} languages to work with!`
-                );
             }
-            extLogger.logActivity(
-                `Waiting for the user to select a language...`
-            );
 
             // Allows the user to select a language, if the user has a pre-defined language, we will use that
             let preSelectedLanguage: any;
@@ -64,22 +59,28 @@ export class ItemCreator {
                 preSelectedTemplate = splitTemplate(preRequestedItem);
                 selectedLanguage = rawTemplateFile[preSelectedLanguage];
                 selectedLanguageTemplates = selectedLanguage.templates;
+                extLogger.logInfo(
+                    `Pre-selected language: ${preSelectedLanguage}`
+                );
             } else {
+                extLogger.logActivity(
+                    `Waiting for the user to select a language...`
+                );
                 selectedLanguage = await AskToUser.selectALanguage(
                     languagesArray
                 );
+                extLogger.logInfo(`User selected: ${selectedLanguage.label}`);
             }
-            extLogger.logInfo(`User selected: ${selectedLanguage.displayName}`);
 
-            extLogger.logActivity(
-                'Waiting for the user to select a template...'
-            );
             // Let the user select a template, based on the language
             if (
                 (preSelectedTemplate !== undefined ||
                     preSelectedTemplate !== '') &&
                 preRequestedItem !== undefined
             ) {
+                extLogger.logInfo(
+                    `Pre-selected template: ${preSelectedTemplate}`
+                );
                 selectedTemplate =
                     rawTemplateFile[preSelectedLanguage]['templates'][
                         preSelectedTemplate
@@ -94,18 +95,16 @@ export class ItemCreator {
                         `No templates for the selected language!`
                     );
                     throw new Error(errorMessages.templateFileEmpty);
-                } else {
-                    extLogger.logInfo(
-                        `We found ${selectedLanguageTemplates.length} templates to work with!`
-                    );
                 }
+                extLogger.logActivity(
+                    `Waiting for the user to select a template...`
+                );
                 selectedTemplate = await AskToUser.selectATemplate(
                     selectedLanguageTemplates,
                     itemType
                 );
+                extLogger.logInfo(`User selected: ${selectedTemplate.label}`);
             }
-
-            extLogger.logInfo(`User selected: ${selectedTemplate.displayName}`);
 
             // Ensuring the file extension
             let fileExt: string;
@@ -123,13 +122,20 @@ export class ItemCreator {
                 fileExt = '.' + fileExt;
             }
 
-            extLogger.logInfo(`Waiting for the user to decide an item name`);
             let tempFilename: string;
-            tempFilename = await AskToUser.forAnItemName(
-                localPath,
-                selectedTemplate.filename,
-                fileExt
-            );
+            if (firstTime === true) {
+                extLogger.logInfo(
+                    `Waiting for the user to decide an item name...`
+                );
+                tempFilename = await AskToUser.forAnItemName(
+                    localPath,
+                    selectedTemplate.filename,
+                    fileExt
+                );
+                extLogger.logInfo(`User selected a name: ${tempFilename}`);
+            } else {
+                tempFilename = parentName;
+            }
 
             // Creating a file Uri
             let uriString = selectedRootFolder + tempFilename + fileExt;
@@ -151,12 +157,15 @@ export class ItemCreator {
             }
 
             // Creating the snippet
+            extLogger.logActivity(`Creating the snippet...`);
             let actualSnippet: SnippetString;
             let snippetAsString = '';
             selectedTemplate?.body.forEach((element: string) => {
                 snippetAsString += element + '\r';
             });
-            extLogger.logInfo(`Template string created!`);
+            extLogger.logInfo(`Snippet created successfully!`);
+
+            // Resolving the namespace if needed
             if (
                 selectedLanguage.namespace === true ||
                 selectedTemplate.namespace === true
@@ -189,6 +198,43 @@ export class ItemCreator {
                     })
                     .then(() => {
                         extLogger.logSuccess(`Snippet inserted!!`);
+                        if (firstTime === false) {
+                            extLogger.logActivity(
+                                'Closing the sibling file...'
+                            );
+                            vscode.commands.executeCommand(
+                                'workbench.action.closeActiveEditor'
+                            );
+                            extLogger.logSuccess(`Sibling file closed!!`);
+                        }
+                        if (
+                            selectedTemplate.sibling !== undefined &&
+                            firstTime === true
+                        ) {
+                            // We only create the file if it's the first time we run the command
+                            extLogger.logActivity(
+                                "A sibling file was defined, so we're creating it now..."
+                            );
+                            this.createItem(
+                                fileAsUri,
+                                itemType,
+                                selectedTemplate.sibling,
+                                (firstTime = false),
+                                (parentName = tempFilename)
+                            );
+                        }
+                        // } else if (
+                        //     selectedTemplate.sibling !== undefined &&
+                        //     firstTime === false
+                        // ) {
+                        //     extLogger.logInfo(
+                        //         "We didn't create the sibling file, because it's not the first time we run the command"
+                        //     );
+                        // } else if (selectedTemplate.sibling === undefined) {
+                        //     extLogger.logInfo(
+                        //         "We don't create any sibling file, because the template doesn't have a sibling"
+                        //     );
+                        // }
                     });
             } else {
                 throw new Error(errorMessages.fileExistMessage);

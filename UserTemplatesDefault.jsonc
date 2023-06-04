@@ -1,42 +1,10 @@
 {
     // Place your custom templates here
-    // Start typing "languageTemplate" and use the provided snipped
-    // to create a new language entry, or use "itemTemplate" to create
-    // a new template for a language, inside the "templates" property.
-    // Follow this link to read a tutorial about how to create a custom
-    // template for your favorite programming language:
+    //
+    // Start typing "languageTemplate" in a new line and use the provided snipped to create a new language entry, or use "itemTemplate" to create a new template for a language, inside the "templates" property of the `languageTemplate` object.
+    //
+    // Follow this link to read a tutorial about how to create a custom template for your favorite programming language:
     // https://github.com/thefish2191/Add-Items/tree/Live/Resources/UserTemplates/UserDefinedTemplates.md
+    //
     // Please enjoy!
-    "javaScript": {
-        "displayName": "JavaScript",
-        "fileExt": ".js",
-        "description": "The popular web programming language",
-        "templates": {
-            "class": {
-                "displayName": "Class",
-                "description": "Simple class",
-                "filename": "Class",
-                "body": [
-                    "class $TM_FILENAME_BASE {",
-                    "  constructor(name) {",
-                    "    this.name = name;",
-                    "   }",
-                    "}"
-                ]
-            },
-            "enum": {
-                "displayName": "Enum",
-                "description": "A enum for the all the seasons of the year",
-                "filename": "enum",
-                "body": [
-                    "const Seasons = {",
-                    "    Summer: \"summer\",",
-                    "    Autumn: \"autumn\",",
-                    "    Winter: \"winter\",",
-                    "    Spring: \"spring\"",
-                    "}"
-                ]
-            }
-        }
-    }
 }
