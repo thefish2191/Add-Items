@@ -4,6 +4,7 @@ const prefixInfo = `[  Info ]: `;
 const prefixError = `[ Error ]: `;
 const prefixWarning = `[Warning]: `;
 const prefixActivity = `[ Doing ]: `;
+const prefixDone = `[ Done  ]: `;
 
 /**
  * A class to allow the extension log important information to the console
@@ -28,8 +29,7 @@ export class Logger {
         this.loggingChannel.appendLine(`  ❌❌ `);
     }
     public logSuccess(message: string) {
-        this.loggingChannel.appendLine(`   ✅✅ ` + message);
-        this.loggingChannel.appendLine(``);
+        this.loggingChannel.appendLine(prefixDone + message);
     }
     public reportWarning(message: string) {
         this.loggingChannel.appendLine(prefixWarning + message);

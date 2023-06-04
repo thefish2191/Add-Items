@@ -58,9 +58,6 @@ export class AskToUser {
         customName: string,
         fileExtension: string
     ) {
-        if (!fileExtension.startsWith('.')) {
-            fileExtension = '.' + fileExtension;
-        }
         let itemName: string | undefined;
 
         let fullLength = localPath.length + customName.length;
@@ -158,7 +155,7 @@ export class AskToUser {
      * automatically, and in case there are no open folders, it throws an error
      * @returns A root folder with a path separator at the end, as a string
      */
-    static async selectARootFolder(): Promise<string> {
+    static async selectARootFolder(itemType: ItemType): Promise<string> {
         let folders = vscode.workspace.workspaceFolders;
         let selectedRootFolder = '';
         if (folders === undefined) {
@@ -168,7 +165,7 @@ export class AskToUser {
         } else {
             const userOption = await vscode.window.showWorkspaceFolderPick({
                 ignoreFocusOut: true,
-                placeHolder: 'Select the destination folder',
+                placeHolder: `Select the destination folder for your ${itemType} item `,
             });
             if (userOption !== undefined) {
                 selectedRootFolder = userOption.uri.fsPath + path.sep;

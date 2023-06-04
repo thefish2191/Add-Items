@@ -97,20 +97,44 @@ Well, don't you worry because I got your back:
 Follow the process in the [Create custom items](#creating-custom-items) section, and use `[namespace]` in the exact part  of your snippet where you want to place the namespace, this is the class snipped I use to create a top level class, as an example:
 
 ```json
-"class": {
-    "displayName": "Class",
-    "description": "A C# top level class.",
-    "filename": "Class",
-    "body": [
-        "namespace [namespace];",
-        "",
-        "public class $TM_FILENAME_BASE",
-        "{",
-        "\t$0",
-        "}"
-    ]
+"csharp": {
+    "displayName": "C#",
+    "fileExt": "cs",
+    "description": "A general-purpose high-level programming language supporting multiple paradigms.",
+    "namespace": true,
+    "templates": {
+        "class": {
+            "displayName": "Class",
+            "description": "A C# top level class.",
+            "filename": "Class",
+            "body": [
+                "namespace [namespace];",
+                "",
+                "public class $TM_FILENAME_BASE",
+                "{",
+                "\t$0",
+                "}"
+            ]
+        },
+        "class2": {
+            "displayName": "Class",
+            "description": "A C# top level class.",
+            "filename": "Class",
+            "namespace": true,
+            "body": [
+                "namespace [namespace];",
+                "",
+                "public class $TM_FILENAME_BASE",
+                "{",
+                "\t$0",
+                "}"
+            ]
+        }
+    }
 }
 ```
+
+Note: If you have templates already created for C#, previous to version 0.6.0, you need to add the namespace property and set it to true, as follows: `"namespace": true` in either the language or the template. In the example above, the first class does not have the `namespace` property at all, but it still add it, that's because the upper object (language) does have it.
 
 The extension will replace the `[namespace]` string for an actual namespace, based on the projects, or the folder structure, when you create the file!
 

@@ -24,47 +24,50 @@ export async function getTemplates(itemType: ItemType) {
     }
     return templates;
 }
-export function mapTemplates(templates: any) {
+export function mapLanguages(templates: any) {
     let templatesMap = [];
     for (let template in templates) {
         templatesMap.push({
-            id: template,
             label: templates[template]['displayName'],
             detail: templates[template]['description'],
-            filename: templates[template]['filename'],
             fileExt: templates[template]['fileExt'],
-            body: templates[template]['body'],
+            templates: templates[template]['templates'],
+            namespace: templates[template]['namespace'],
         });
     }
-    return templatesMap.sort((a, b) => {
-        let firstLabel = a.id,
-            secondLabel = b.id;
-        if (firstLabel < secondLabel) {
+    return templatesMap.sort((langA, langB) => {
+        let firstLang = langA.label,
+            secondLang = langB.label;
+        if (firstLang < secondLang) {
             return -1;
         }
-        if (secondLabel > firstLabel) {
+        if (secondLang > firstLang) {
             return 1;
         }
         return 0;
     });
 }
-export function mapLanguages(templates: any) {
-    let templatesMap = [];
+
+export function mapTemplates(templates: any) {
+    let templatesMapped = [];
     for (let template in templates) {
-        templatesMap.push({
-            id: template,
+        templatesMapped.push({
             label: templates[template]['displayName'],
             detail: templates[template]['description'],
+            filename: templates[template]['filename'],
             fileExt: templates[template]['fileExt'],
+            body: templates[template]['body'],
+            namespace: templates[template]['namespace'],
+            sibling: templates[template]['sibling'],
         });
     }
-    return templatesMap.sort((langA, langB) => {
-        let firstLang = langA.id,
-            secondLang = langB.id;
-        if (firstLang < secondLang) {
+    return templatesMapped.sort((a, b) => {
+        let firstLabel = a.label,
+            secondLabel = b.label;
+        if (firstLabel < secondLabel) {
             return -1;
         }
-        if (secondLang > firstLang) {
+        if (secondLabel > firstLabel) {
             return 1;
         }
         return 0;

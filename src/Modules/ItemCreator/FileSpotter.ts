@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { fileExtRegex, filenameRegex, pathRegex } from '../GlobalConsts';
 import { AskToUser } from '../AskToUser';
+import { ItemType } from './ItemType';
 
 export class FileSpotter {
     /**
@@ -13,9 +14,12 @@ export class FileSpotter {
      * a URI will will be given, use it here.
      * @returns A string path of a folder, terminated with a path separator
      */
-    static async determinateRootFolder(clicker: Uri): Promise<string> {
+    static async determinateRootFolder(
+        clicker: Uri,
+        itemType: ItemType
+    ): Promise<string> {
         if (clicker === undefined) {
-            return await AskToUser.selectARootFolder();
+            return await AskToUser.selectARootFolder(itemType);
         } else {
             return await this.assignRootFolder(clicker);
         }
