@@ -1,6 +1,6 @@
 # Add-Items
 
-Written with ❤️ by [theFish2191](https://twitter.com/thefish2191)
+Written with ❤️ by [theFish1087](https://twitter.com/thefish1087)
 
 [![GitHub](https://img.shields.io/github/license/thefish2191/Add-Items?style=plastic)](https://github.com/thefish2191/Add-Items/blob/Live/LICENSE)
 [![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/TheFish2191.add-items?style=plastic)](https://marketplace.visualstudio.com/items?itemName=TheFish2191.add-items)
@@ -43,13 +43,13 @@ And as many custom items as you can add!
 
 A full tutorial is available [here](./Resources/UserTemplates/UserDefinedTemplates.md).  
 If you want to contribute with templates, please do!
-Follow [this](https://github.com/thefish2191/Add-Items/issues) link to raise an issue with your template(s)
+Follow [this](https://github.com/thefish1087/Add-Items/issues) link to raise an issue with your template(s)
 
 ---
 
-The following context menu is available for C#, using my other extension: [C# stuff](https://marketplace.visualstudio.com/items?itemName=TheFish2191.csharp-stuff).
+<!-- The following context menu is available for C#, using my other extension: [C# stuff](https://marketplace.visualstudio.com/items?itemName=TheFish2191.csharp-stuff). -->
 
-![CSharpMenu](Resources/Readme/csharp-menu.png)
+<!-- ![CSharpMenu](Resources/Readme/csharp-menu.png) -->
 
 ---
 
