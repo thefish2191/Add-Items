@@ -2,6 +2,10 @@
 
 All notable changes to the "add-items" extension will be documented in this file.
 
+## 0.6.4
+
+- Fixed vulnerability issue
+
 ## 0.6.2
 
 - Fixed minor bug in the naming of the razor templates

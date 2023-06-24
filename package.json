@@ -5,7 +5,7 @@
     "description": "Create classes and other types for any Programming Language (C#, Cpp, python etc)",
     "repository": "https://github.com/thefish2191/add-items",
     "icon": "./Resources/Extension/windows.png",
-    "version": "0.6.2",
+    "version": "0.6.4",
     "license": "MIT",
     "preview": true,
     "engines": {
