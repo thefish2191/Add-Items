@@ -5,25 +5,13 @@
     "description": "Create classes and other types for any Programming Language (C#, Cpp, python etc)",
     "repository": "https://github.com/thefish2191/add-items",
     "icon": "./Resources/Extension/windows.png",
-    "version": "0.6.4",
+    "version": "0.7.0",
     "license": "MIT",
-    "preview": true,
     "engines": {
         "vscode": "^1.76.0"
     },
-    "categories": [
-        "Programming Languages"
-    ],
-    "keywords": [
-        "New Item",
-        "New File",
-        "New Class",
-        "Custom Items",
-        "Custom Files",
-        "C#",
-        "C# extensions",
-        "Snippets",
-        "Custom snippets"
+    "extensionDependencies": [
+        "Xtendia.file-craft"
     ],
     "activationEvents": [
         "onStartupFinished"
@@ -36,60 +24,7 @@
                 "path": "/snippets/Jsonc.json"
             }
         ],
-        "commands": [
-            {
-                "command": "add-items.addItem",
-                "title": "Add Item",
-                "category": "add-items"
-            },
-            {
-                "command": "add-items.addItemCustom",
-                "title": "Add Item (Custom)",
-                "category": "add-items"
-            },
-            {
-                "command": "add-items.restoreTemplateFiles",
-                "title": "Restore user templates file",
-                "category": "add-items"
-            },
-            {
-                "command": "add-items.openUserTemplates",
-                "title": "Open user templates file",
-                "category": "add-items"
-            }
-        ],
-        "menus": {
-            "file/newFile": [
-                {
-                    "command": "add-items.addItem"
-                },
-                {
-                    "command": "add-items.addItemCustom"
-                }
-            ],
-            "explorer/context": [
-                {
-                    "command": "add-items.addItem",
-                    "group": "0_addItems",
-                    "when": "explorerResourceIsFolder"
-                },
-                {
-                    "command": "add-items.addItemCustom",
-                    "group": "0_addItems",
-                    "when": "explorerResourceIsFolder"
-                }
-            ]
-        },
-        "keybindings": [
-            {
-                "command": "add-items.addItem",
-                "key": "ctrl+win+/"
-            },
-            {
-                "command": "add-items.addItemCustom",
-                "key": "ctrl+win+\\"
-            }
-        ]
+        "commands": []
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
