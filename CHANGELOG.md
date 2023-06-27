@@ -2,6 +2,14 @@
 
 All notable changes to the "add-items" extension will be documented in this file.
 
+## 0.8.1
+
+- Last version of this extension
+  - Added a new extension: [FileCraft](https://marketplace.visualstudio.com/items?itemName=Xtendia.filecraft)
+- This last version of this extension was published to inform users about the new extension, has all features disabled, and will be removed from the marketplace soon.
+- A detailed explanation of why this extension was removed can be found [here](NotAGoodBye.md)
+- A dependency has been added to the new extension, so users can install it automatically
+
 ## 0.6.4
 
 - Fixed vulnerability issue

@@ -1,5 +1,24 @@
 # Add-Items
 
+❌❌❌❌❌  
+👇👇👇👇👇
+
+## Extension removed
+
+> **Note:** This extension will be removed from the marketplace, all of it's functionality has been moved to [Xtendia.file-craft](https://marketplace.visualstudio.com/items?itemName=Xtendia.file-craft).
+
+I apologize for the inconvenience, and issues this may cause, however, the new extension is more robust, and it's easier to maintain.
+
+If you have any questions, please, feel free to [contact me](twitter.com/theFish1087) on twitter.  
+If you wanna read more about this, you can read [this](NotAGoodBye.md) file.  
+
+👆👆👆👆👆  
+❌❌❌❌❌
+
+---
+
+# Old readme
+
 Written with ❤️ by [theFish1087](https://twitter.com/thefish1087)
 
 [![GitHub](https://img.shields.io/github/license/thefish2191/Add-Items?style=plastic)](https://github.com/thefish2191/Add-Items/blob/Live/LICENSE)
